@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { getAllPosts } from "@/lib/blogger";
 import type { Metadata } from "next";
 
@@ -20,6 +21,13 @@ export default async function BlogPage() {
         {/* Hero */}
         <div style={{ background: "var(--dark)", padding: "48px 0 40px", textAlign: "center" }}>
           <div className="container">
+            {/* Breadcrumb */}
+            <div style={{ marginBottom: "20px" }}>
+              <Breadcrumb crumbs={[
+                { label: "Home", href: "/" },
+                { label: "Blog" },
+              ]} />
+            </div>
             <span style={{
               display: "inline-block", fontSize: "11px", fontWeight: 800,
               letterSpacing: "2px", textTransform: "uppercase",

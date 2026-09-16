@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { getPostBySlug, getAllPosts } from "@/lib/blogger";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -43,19 +44,16 @@ export default async function BlogPostPage(
       <main>
 
         {/* Hero */}
-        <div style={{
-          background: "var(--dark)", padding: "56px 0 40px",
-        }}>
+        <div style={{ background: "var(--dark)", padding: "56px 0 40px" }}>
           <div className="container">
-            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", marginBottom: "12px" }}>
-              <Link href="/" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Home</Link>
-              {" / "}
-              <Link href="/blog" style={{ color: "var(--green)", textDecoration: "none" }}>Blog</Link>
-              {" / "}
-              <span style={{ color: "rgba(255,255,255,0.65)" }}>
-                {post.title.slice(0, 48)}{post.title.length > 48 ? "…" : ""}
-              </span>
-            </p>
+            {/* Breadcrumb with back button */}
+            <div style={{ marginBottom: "20px" }}>
+              <Breadcrumb crumbs={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: post.title.slice(0, 40) + (post.title.length > 40 ? "…" : "") },
+              ]} />
+            </div>
             <div style={{ display: "flex", gap: "10px", marginBottom: "16px", flexWrap: "wrap" }}>
               <span style={{
                 fontSize: "11px", fontWeight: 700, background: "rgba(74,164,97,0.2)",

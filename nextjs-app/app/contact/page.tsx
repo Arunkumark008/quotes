@@ -2,6 +2,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { useModal } from "@/lib/modal";
 
 const infoCards = [
@@ -60,12 +61,10 @@ export default function ContactPage() {
         {/* ── Hero / Breadcrumb ─────────────────────────── */}
         <section className="contact-hero">
           <div className="container">
-            {/* Breadcrumb */}
-            <nav className="contact-breadcrumb">
-              <Link href="/" className="bc-link">Home</Link>
-              <span className="bc-sep">›</span>
-              <span className="bc-current">Contact</span>
-            </nav>
+            <Breadcrumb crumbs={[
+              { label: "Home", href: "/" },
+              { label: "Contact" },
+            ]} />
 
             <h1 className="contact-h1">Contact Us</h1>
             <p className="contact-sub">
@@ -140,24 +139,6 @@ export default function ContactPage() {
           padding: 56px 0 52px;
           text-align: center;
         }
-
-        /* Breadcrumb */
-        .contact-breadcrumb {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          margin-bottom: 20px;
-          font-size: 12px;
-          font-weight: 600;
-        }
-        .bc-link {
-          color: rgba(255,255,255,0.5);
-          text-decoration: none;
-          transition: color 0.15s;
-        }
-        .bc-link:hover { color: var(--green); }
-        .bc-sep { color: rgba(255,255,255,0.25); font-size: 14px; }
-        .bc-current { color: var(--green); }
 
         .contact-h1 {
           font-size: clamp(2rem, 4vw, 3rem);

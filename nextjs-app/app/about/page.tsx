@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { useModal } from "@/lib/modal";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const fadeUp = (delay = 0): Variants => ({
   hidden: { opacity: 0, y: 24 },
@@ -67,11 +68,10 @@ export default function AboutPage() {
         {/* ── Hero ─────────────────────────────────── */}
         <section className="about-hero">
           <div className="container">
-            <nav className="ab-breadcrumb">
-              <Link href="/" className="ab-bc-link">Home</Link>
-              <span className="ab-bc-sep">›</span>
-              <span className="ab-bc-cur">About Us</span>
-            </nav>
+            <Breadcrumb crumbs={[
+              { label: "Home", href: "/" },
+              { label: "About Us" },
+            ]} />
             <motion.h1
               className="about-hero-h1"
               initial={{ opacity: 0, y: 20 }}
@@ -326,14 +326,6 @@ export default function AboutPage() {
           background: var(--dark);
           padding: 56px 0 52px;
         }
-        .ab-breadcrumb {
-          display: inline-flex; align-items: center; gap: 6px;
-          margin-bottom: 20px; font-size: 12px; font-weight: 600;
-        }
-        .ab-bc-link { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
-        .ab-bc-link:hover { color: var(--green); }
-        .ab-bc-sep  { color: rgba(255,255,255,0.2); font-size: 14px; }
-        .ab-bc-cur  { color: var(--green); }
         .about-hero-h1 {
           font-size: clamp(2rem, 5vw, 3.2rem);
           font-weight: 900; line-height: 1.1;

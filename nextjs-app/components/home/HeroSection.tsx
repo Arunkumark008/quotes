@@ -199,7 +199,7 @@ export default function HeroSection() {
             width: 100%; justify-content: center; text-align: center;
           }
           .hero-trust { gap: 10px; }
-          /* Full viewport width form on small phones — no gaps */
+          /* Full viewport width, no border-radius, no scrollbar */
           .hero-form-col {
             margin-left: -20px;
             margin-right: -20px;
@@ -208,6 +208,12 @@ export default function HeroSection() {
           .qs-iframe {
             height: 580px;
             border-radius: 0;
+            overflow: hidden;
+          }
+          /* Kill any scrollbar on iframe wrapper too */
+          .hero-form-col > div {
+            border-radius: 0 !important;
+            overflow: hidden !important;
           }
         }
       `}</style>
