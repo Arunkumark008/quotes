@@ -102,14 +102,17 @@ export default function HeroSection() {
             variants={fadeLeft(0.18)}
             className="hero-form-col"
           >
-            <iframe
-              src="https://form.questionscout.com/616e35ca63bd79140f61b3ef"
-              className="qs-iframe"
-              title="Get a Free Life Insurance Quote"
-              frameBorder="0"
-              scrolling="no"
-              allow="clipboard-write"
-            />
+            {/* overflow:hidden wrapper kills any scrollbar the iframe tries to show */}
+            <div style={{ overflow: "hidden", borderRadius: "16px", lineHeight: 0 }}>
+              <iframe
+                src="https://form.questionscout.com/616e35ca63bd79140f61b3ef"
+                className="qs-iframe"
+                title="Get a Free Life Insurance Quote"
+                frameBorder="0"
+                scrolling="no"
+                allow="clipboard-write"
+              />
+            </div>
           </motion.div>
 
         </div>
@@ -182,19 +185,30 @@ export default function HeroSection() {
         }
 
         @media (max-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .hero-form-col { order: 2; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+          /* Form FIRST on mobile */
+          .hero-form-col { order: -1; }
+          .hero-copy     { order: 1; }
           .qs-iframe { height: 600px; }
         }
         @media (max-width: 600px) {
-          .hero-container { padding-top: 32px !important; padding-bottom: 32px !important; }
-          .hero-h1 { font-size: clamp(2rem, 9vw, 2.8rem) !important; }
+          .hero-container { padding-top: 20px !important; padding-bottom: 32px !important; }
+          .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.4rem) !important; }
           .hero-ctas { flex-direction: column; gap: 10px; }
           .hero-ctas button, .hero-ctas .hero-learn-more {
             width: 100%; justify-content: center; text-align: center;
           }
-          .hero-trust { gap: 12px; }
-          .qs-iframe { height: 560px; }
+          .hero-trust { gap: 10px; }
+          /* Full viewport width form on small phones — no gaps */
+          .hero-form-col {
+            margin-left: -20px;
+            margin-right: -20px;
+            width: calc(100% + 40px);
+          }
+          .qs-iframe {
+            height: 580px;
+            border-radius: 0;
+          }
         }
       `}</style>
     </section>
