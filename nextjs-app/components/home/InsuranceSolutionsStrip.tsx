@@ -42,7 +42,7 @@ export default function InsuranceSolutionsStrip() {
     { Icon: IconLife,       title: t.strip1Title, desc: t.strip1Desc, href: "/services/term-life" },
     { Icon: IconCritical,   title: t.strip2Title, desc: t.strip2Desc, href: "/services/critical-illness" },
     { Icon: IconDisability, title: t.strip3Title, desc: t.strip3Desc, href: "/services/disability" },
-    { Icon: IconBusiness,   title: t.strip4Title, desc: t.strip4Desc, href: "/services" },
+    { Icon: IconBusiness,   title: t.strip4Title, desc: t.strip4Desc, href: "/services/whole-life" },
   ];
 
   return (

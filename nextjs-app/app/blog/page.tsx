@@ -18,9 +18,10 @@ export default async function BlogPage() {
       <Header />
       <main>
 
-        {/* Hero */}
-        <div style={{ background: "var(--dark)", padding: "48px 0 40px", textAlign: "center" }}>
-          <div className="container">
+        {/* Hero with cover image */}
+        <section className="blog-hero">
+          <div className="blog-hero-overlay" />
+          <div className="container blog-hero-content">
             {/* Breadcrumb */}
             <div style={{ marginBottom: "20px" }}>
               <Breadcrumb crumbs={[
@@ -42,13 +43,13 @@ export default async function BlogPage() {
               Our Blog
             </h1>
             <p style={{
-              color: "rgba(255,255,255,0.55)", marginTop: "10px",
-              fontSize: "15px", maxWidth: "480px", margin: "10px auto 0",
+              color: "rgba(255,255,255,0.65)", marginTop: "10px",
+              fontSize: "15px", maxWidth: "480px",
             }}>
               Tips, guides and news to help you make smarter life insurance decisions.
             </p>
           </div>
-        </div>
+        </section>
 
         {/* Posts */}
         <section style={{ padding: "48px 0 64px", background: "#fff" }}>
@@ -126,6 +127,28 @@ export default async function BlogPage() {
       <Footer />
 
       <style>{`
+        /* Blog Hero with cover image */
+        .blog-hero {
+          position: relative;
+          background: linear-gradient(135deg, #1a3a1d 0%, #0f1623 100%);
+          background-image: url('/cover-blog.jpg');
+          background-size: cover;
+          background-position: center;
+          min-height: 320px;
+          display: flex;
+          align-items: flex-end;
+          padding: 0 0 48px;
+        }
+        .blog-hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(15,22,35,0.4) 0%, rgba(15,22,35,0.88) 70%, rgba(15,22,35,0.98) 100%);
+        }
+        .blog-hero-content {
+          position: relative;
+          z-index: 1;
+        }
+        
         .blog-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -136,6 +159,7 @@ export default async function BlogPage() {
         }
         @media (max-width: 560px) {
           .blog-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+          .blog-hero { min-height: 280px; padding-bottom: 36px; }
         }
         .blog-card:hover {
           box-shadow: 0 8px 28px rgba(0,0,0,0.09) !important;

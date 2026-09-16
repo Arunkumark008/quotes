@@ -32,6 +32,19 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${nunito.variable} ${sora.variable}`}>
+      <head>
+        {/* Preconnect to QuestionScout for faster form loading */}
+        <link rel="preconnect" href="https://form.questionscout.com" />
+        <link rel="preconnect" href="https://cdn.questionscout.com" />
+        <link rel="dns-prefetch" href="https://form.questionscout.com" />
+        <link rel="dns-prefetch" href="https://cdn.questionscout.com" />
+        {/* Preload the form iframe for instant display */}
+        <link 
+          rel="preload" 
+          href="https://form.questionscout.com/616e35ca63bd79140f61b3ef" 
+          as="document"
+        />
+      </head>
       {/* Google Analytics 4 — G-0RZQ0JT92X */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-0RZQ0JT92X"

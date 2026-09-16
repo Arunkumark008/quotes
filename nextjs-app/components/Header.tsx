@@ -2,13 +2,49 @@
 import QuoteButton from "@/components/QuoteButton";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLang, Lang } from "@/lib/i18n";
+import ColorSwitcher from "@/components/ColorSwitcher";
 
 export default function Header() {
   const { t, lang, setLang } = useLang();
   const [mobileOpen, setMobileOpen]  = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [isPurple, setIsPurple] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  /* Check color on mount and listen for changes */
+  useEffect(() => {
+    const checkColor = () => {
+      const saved = localStorage.getItem("brand-color");
+      setIsPurple(saved === "#572a4e");
+    };
+    checkColor();
+    
+    // Listen for storage changes (when color switcher updates)
+    window.addEventListener("storage", checkColor);
+    
+    // Also poll for changes (for same-tab updates)
+    const interval = setInterval(checkColor, 100);
+    
+    return () => {
+      window.removeEventListener("storage", checkColor);
+      clearInterval(interval);
+    };
+  }, []);
+
+  /* Close dropdown when clicking outside */
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setServicesOpen(false);
+      }
+    };
+    if (servicesOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [servicesOpen]);
 
   /* Simplified services — only 3 main ones in the dropdown */
   const serviceItems = [
@@ -46,18 +82,16 @@ export default function Header() {
             </span>
           </div>
           <div className="topbar-right">
+            <ColorSwitcher />
+            <span className="topbar-divider" />
             <span className="amf-badge">AMF Lic. #179631</span>
-            <div className="lang-switcher">
-              <span className="lang-ca">CA</span>
-              <span className="lang-sep">|</span>
-              {(["en", "fr"] as Lang[]).map((l, i) => (
-                <span key={l} style={{ display: "flex", alignItems: "center", gap: "2px" }}>
-                  {i > 0 && <span className="lang-sep">|</span>}
-                  <button onClick={() => setLang(l)} className={`lang-btn${lang === l ? " lang-btn--active" : ""}`}>
-                    {l.toUpperCase()}
-                  </button>
-                </span>
-              ))}
+            {/* Language toggle switch */}
+            <div className="lang-toggle" onClick={() => setLang(lang === "en" ? "fr" : "en")}>
+              <span className={`lang-toggle-label${lang === "en" ? " lang-toggle-label--active" : ""}`}>EN</span>
+              <div className="lang-toggle-track">
+                <div className={`lang-toggle-thumb${lang === "fr" ? " lang-toggle-thumb--right" : ""}`} />
+              </div>
+              <span className={`lang-toggle-label${lang === "fr" ? " lang-toggle-label--active" : ""}`}>FR</span>
             </div>
           </div>
         </div>
@@ -67,10 +101,16 @@ export default function Header() {
       <nav className="main-nav">
         <div className="container main-nav-inner">
 
-          {/* Logo */}
+          {/* Logo - switches color based on theme */}
           <Link href="/" className="logo-wrap">
-            <Image src="/logo.png" alt="Quotes Life Insurance" width={200} height={60} priority
-              style={{ height: "52px", width: "auto", objectFit: "contain", mixBlendMode: "multiply" }}
+            <Image 
+              src="/logo.png" 
+              alt="Quotes Life Insurance" 
+              width={200} 
+              height={60} 
+              priority
+              className={isPurple ? "logo-purple" : ""}
+              style={{ height: "52px", width: "auto", objectFit: "contain" }}
             />
           </Link>
 
@@ -78,11 +118,12 @@ export default function Header() {
           <div className="desktop-nav">
             <Link href="/" className="nav-link">{t.home}</Link>
 
-            {/* Services dropdown */}
-            <div className="dropdown-wrap"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}>
-              <button className="nav-link nav-link--btn">
+            {/* Services dropdown — click to toggle */}
+            <div className="dropdown-wrap" ref={dropdownRef}>
+              <button 
+                className="nav-link nav-link--btn"
+                onClick={() => setServicesOpen(!servicesOpen)}
+              >
                 {t.services}
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                   style={{ transition: "transform 0.2s", transform: servicesOpen ? "rotate(180deg)" : "none" }}>
@@ -96,11 +137,6 @@ export default function Header() {
                       {s.label}
                     </Link>
                   ))}
-                  {/* See all link */}
-                  <div className="dropdown-divider" />
-                  <Link href="/services" className="dropdown-item dropdown-item--all" onClick={() => setServicesOpen(false)}>
-                    View All Services →
-                  </Link>
                 </div>
               )}
             </div>
@@ -161,24 +197,46 @@ export default function Header() {
       </nav>
 
       <style>{`
-        .topbar { background: #4f8854; padding: 7px 0; font-size: 12px; color: #fff; }
+        .topbar { background: var(--green); padding: 7px 0; font-size: 12px; color: #fff; }
         .topbar-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
         .topbar-left  { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
         .topbar-right { display: flex; align-items: center; gap: 14px; }
         .topbar-link  { display: flex; align-items: center; gap: 5px; color: rgba(255,255,255,0.82); text-decoration: none; font-size: 12px; transition: color 0.15s; }
         .topbar-link:hover { color: #fff; }
         .topbar-link--bold { font-weight: 700; color: #fff; }
+        .topbar-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.3); }
         .amf-badge { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 0.3px; }
-        .lang-switcher { display: flex; align-items: center; gap: 2px; }
-        .lang-ca  { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); padding: 0 4px; }
-        .lang-sep { color: rgba(255,255,255,0.3); font-size: 11px; padding: 0 1px; }
-        .lang-btn { background: none; border: none; cursor: pointer; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.65); padding: 2px 5px; border-radius: 4px; transition: color 0.15s, background 0.15s; }
-        .lang-btn:hover { color: #fff; }
-        .lang-btn--active { color: #fff; background: rgba(255,255,255,0.15); }
+        
+        /* Language toggle switch */
+        .lang-toggle {
+          display: flex; align-items: center; gap: 8px;
+          cursor: pointer; user-select: none;
+        }
+        .lang-toggle-label {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+          color: rgba(255,255,255,0.5); transition: color 0.2s;
+        }
+        .lang-toggle-label--active { color: #fff; }
+        .lang-toggle-track {
+          width: 36px; height: 20px;
+          background: rgba(255,255,255,0.2);
+          border-radius: 12px; position: relative;
+          transition: background 0.2s;
+        }
+        .lang-toggle:hover .lang-toggle-track { background: rgba(255,255,255,0.3); }
+        .lang-toggle-thumb {
+          position: absolute; top: 2px; left: 2px;
+          width: 16px; height: 16px;
+          background: #fff; border-radius: 50%;
+          transition: transform 0.2s ease;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .lang-toggle-thumb--right { transform: translateX(16px); }
 
         .main-nav { background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 2px 16px rgba(0,0,0,0.05); }
         .main-nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 8px; }
         .logo-wrap { flex-shrink: 0; display: flex; align-items: center; text-decoration: none; }
+        .logo-purple { filter: hue-rotate(270deg) saturate(0.8); }
 
         .desktop-nav { display: flex; align-items: center; gap: 2px; }
         .nav-link {
@@ -203,8 +261,6 @@ export default function Header() {
           transition: background 0.15s, color 0.15s;
         }
         .dropdown-item:hover { background: rgba(74,164,97,0.08); color: var(--green); }
-        .dropdown-divider { height: 1px; background: var(--border); margin: 4px 8px; }
-        .dropdown-item--all { color: var(--green); font-weight: 700; }
 
         .mobile-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 6px; cursor: pointer; }
         .mobile-menu { background: #fff; border-top: 1px solid var(--border); padding: 12px 20px 20px; }

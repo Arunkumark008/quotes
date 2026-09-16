@@ -1,20 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
-  { label: "Home",             href: "/" },
-  { label: "About Us",         href: "/about" },
-  { label: "Blog",             href: "/blog" },
-  { label: "Contact Us",       href: "/contact" },
-  { label: "Privacy Policy",   href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms" },
+  { label: "Home",       href: "/" },
+  { label: "About Us",   href: "/about" },
+  { label: "Blogs",      href: "/blog" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const serviceLinks = [
-  { label: "Term Life Insurance",       href: "/services/term-life" },
-  { label: "Whole Life Insurance",      href: "/services/whole-life" },
-  { label: "Universal Life Insurance",  href: "/services/universal-life" },
-  { label: "Critical Illness Coverage", href: "/services/critical-illness" },
-  { label: "Disability Insurance",      href: "/services/disability" },
+  { label: "Term Life Insurance",      href: "/services/term-life" },
+  { label: "Whole Life Insurance",     href: "/services/whole-life" },
+  { label: "Disability Insurance",     href: "/services/disability" },
 ];
 
 export default function Footer() {
@@ -25,16 +22,13 @@ export default function Footer() {
         {/* Col 1 — Brand */}
         <div className="footer-brand">
           <Link href="/" className="footer-logo-link">
-            <svg viewBox="0 0 420 120" width="160" height="46" fill="none" aria-label="Quotes Life Insurance">
-              <g fill="#fff">
-                <rect x="42" y="8"  width="16" height="104" rx="8"/>
-                <rect x="8"  y="42" width="104" height="16" rx="8"/>
-                <rect x="42" y="8"  width="16" height="104" rx="8" transform="rotate(45 50 60)"/>
-                <rect x="42" y="8"  width="16" height="104" rx="8" transform="rotate(-45 50 60)"/>
-              </g>
-              <text x="130" y="52"  fontFamily="'Sora','Nunito',Arial,sans-serif" fontWeight="800" fontSize="44" fill="#fff" letterSpacing="-1">Quotes</text>
-              <text x="130" y="104" fontFamily="'Sora','Nunito',Arial,sans-serif" fontWeight="800" fontSize="44" fill="#fff" letterSpacing="-1">Life Insurance</text>
-            </svg>
+            <Image 
+              src="/whitelogo.png" 
+              alt="Quotes Life Insurance" 
+              width={180} 
+              height={50}
+              style={{ objectFit: "contain" }}
+            />
           </Link>
 
           <p className="footer-desc">
@@ -84,7 +78,7 @@ export default function Footer() {
 
         {/* Col 3 — Services */}
         <div className="footer-col">
-          <h4 className="footer-col-h">Our Services</h4>
+          <h4 className="footer-col-h">Services</h4>
           <ul className="footer-list">
             {serviceLinks.map((s) => (
               <li key={s.label}>
@@ -117,18 +111,19 @@ export default function Footer() {
       <style>{`
         .footer { background: #0e1420; color: #fff; }
 
-        /* 3-col grid — compact */
+        /* 3-col grid — brand left, quick links center, services right */
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.8fr 1fr 1fr;
+          grid-template-columns: 1.5fr 1fr 1fr;
           gap: 48px;
           padding: 56px 0 48px;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 800px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; padding: 40px 0 32px; }
+          .footer-brand { grid-column: 1 / -1; }
         }
-        @media (max-width: 540px) {
-          .footer-grid { grid-template-columns: 1fr; gap: 28px; padding: 36px 0 28px; }
+        @media (max-width: 500px) {
+          .footer-grid { grid-template-columns: 1fr; }
         }
 
         /* Brand col */

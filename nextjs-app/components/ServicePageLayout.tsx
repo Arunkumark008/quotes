@@ -3,8 +3,8 @@ import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumb";
 import { useModal } from "@/lib/modal";
+import { useRouter } from "next/navigation";
 
 export interface ServicePageProps {
   title: string;
@@ -52,6 +52,15 @@ const ServiceIcons: Record<string, React.ReactElement> = {
   ),
 };
 
+/* ── Per-service cover images ─────────────────────────────── */
+const ServiceCovers: Record<string, string> = {
+  "Term Life Insurance": "/cover-term-life.jpg",
+  "Whole Life Insurance": "/cover-whole-life.jpg",
+  "Universal Life Insurance": "/cover-universal-life.jpg",
+  "Critical Illness Coverage": "/cover-critical-illness.jpg",
+  "Disability Insurance": "/cover-disability.jpg",
+};
+
 const otherServices = [
   { label: "Term Life Insurance",       href: "/services/term-life" },
   { label: "Whole Life Insurance",      href: "/services/whole-life" },
@@ -92,23 +101,36 @@ const HighlightIcons = [
 
 export default function ServicePageLayout({ data }: { data: ServicePageProps }) {
   const { openModal } = useModal();
+  const router = useRouter();
   const ServiceIcon = ServiceIcons[data.title] ?? ServiceIcons["Term Life Insurance"];
+  const coverImage = ServiceCovers[data.title] ?? "/cover-term-life.jpg";
 
   return (
     <>
       <Header />
       <main>
 
-        {/* ── Hero ─────────────────────────────────── */}
-        <section className="sp-hero">
-          <div className="container">
-            <Breadcrumb crumbs={[
-              { label: "Home",     href: "/" },
-              { label: "Services", href: "/services" },
-              { label: data.title },
-            ]} />
-            <div className="sp-hero-body" style={{ marginTop: "28px" }}>
-              {/* Icon badge */}
+        {/* ── Cover Image Hero ─────────────────────── */}
+        <section className="sp-cover" style={{ backgroundImage: `url('${coverImage}')` }}>
+          <div className="sp-cover-overlay" />
+          <div className="container sp-cover-content">
+            {/* Back button & Breadcrumb */}
+            <div className="sp-nav-row">
+              <button onClick={() => router.back()} className="sp-back-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/>
+                </svg>
+                Back
+              </button>
+              <nav className="sp-breadcrumb">
+                <Link href="/" className="sp-breadcrumb-link">Home</Link>
+                <span className="sp-breadcrumb-sep">/</span>
+                <span className="sp-breadcrumb-current">{data.title}</span>
+              </nav>
+            </div>
+
+            {/* Hero content */}
+            <div className="sp-hero-body">
               <div className="sp-hero-icon">
                 {ServiceIcon}
               </div>
@@ -240,51 +262,122 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
       <Footer />
 
       <style>{`
-        /* ── Hero ── */
-        .sp-hero {
-          background: var(--dark);
-          padding: 52px 0 48px;
+        /* ── Cover Hero with background image ── */
+        .sp-cover {
+          position: relative;
+          background: linear-gradient(135deg, #1a3a1d 0%, #0f1623 100%);
+          background-size: cover;
+          background-position: center top;
+          min-height: 400px;
+          display: flex;
+          align-items: flex-end;
+          padding: 0 0 52px;
+        }
+        .sp-cover-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(15,22,35,0.3) 0%, rgba(15,22,35,0.88) 70%, rgba(15,22,35,0.98) 100%);
+        }
+        .sp-cover-content {
+          position: relative;
+          z-index: 1;
+          width: 100%;
         }
 
-        .sp-hero-body { max-width: 600px; }
+        /* Back button & Breadcrumb row */
+        .sp-nav-row {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+          margin-bottom: 36px;
+          padding-top: 36px;
+        }
+        .sp-back-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 50px;
+          padding: 12px 22px;
+          font-size: 15px;
+          font-weight: 700;
+          color: #fff;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background 0.2s, border-color 0.2s, transform 0.2s;
+          backdrop-filter: blur(8px);
+        }
+        .sp-back-btn:hover {
+          background: rgba(255,255,255,0.18);
+          border-color: rgba(255,255,255,0.4);
+          transform: translateX(-2px);
+        }
+        .sp-breadcrumb {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 15px;
+        }
+        .sp-breadcrumb-link {
+          color: rgba(255,255,255,0.6);
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.15s;
+        }
+        .sp-breadcrumb-link:hover {
+          color: #fff;
+        }
+        .sp-breadcrumb-sep {
+          color: rgba(255,255,255,0.3);
+          font-size: 14px;
+        }
+        .sp-breadcrumb-current {
+          color: var(--green);
+          font-weight: 700;
+        }
+
+        .sp-hero-body { max-width: 640px; }
 
         /* Clean square icon badge — no emoji */
         .sp-hero-icon {
-          width: 64px; height: 64px;
-          border-radius: 16px;
-          background: rgba(74,164,97,0.15);
+          width: 68px; height: 68px;
+          border-radius: 18px;
+          background: rgba(74,164,97,0.2);
           color: var(--green);
           display: flex; align-items: center; justify-content: center;
-          margin-bottom: 20px;
-          border: 1px solid rgba(74,164,97,0.25);
+          margin-bottom: 24px;
+          border: 1px solid rgba(74,164,97,0.35);
+          backdrop-filter: blur(8px);
         }
 
         .sp-hero-h1 {
-          font-size: clamp(2rem, 4.5vw, 3rem);
+          font-size: clamp(2.2rem, 5vw, 3.2rem);
           font-weight: 900; color: #fff; line-height: 1.08;
           letter-spacing: -0.03em;
           font-family: var(--font-sora), sans-serif;
-          margin-bottom: 12px;
+          margin-bottom: 14px;
         }
         .sp-hero-tagline {
-          font-size: 16px; color: rgba(255,255,255,0.55);
-          line-height: 1.7; margin-bottom: 28px; max-width: 500px;
+          font-size: 17px; color: rgba(255,255,255,0.65);
+          line-height: 1.7; margin-bottom: 32px; max-width: 520px;
         }
         .sp-hero-actions {
-          display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+          display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
         }
         .sp-hero-cta {
           display: inline-flex; align-items: center; gap: 8px;
           background: var(--green); color: #fff;
-          font-weight: 800; font-size: 14px;
-          padding: 13px 28px; border-radius: 50px;
+          font-weight: 800; font-size: 15px;
+          padding: 15px 32px; border-radius: 50px;
           border: none; cursor: pointer; font-family: inherit;
           transition: background 0.2s, transform 0.2s;
+          box-shadow: 0 4px 24px rgba(74,164,97,0.4);
         }
-        .sp-hero-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .sp-hero-cta:hover { background: var(--green-dark); transform: translateY(-2px); }
         .sp-hero-call {
-          display: inline-flex; align-items: center; gap: 7px;
-          font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.6);
+          display: inline-flex; align-items: center; gap: 8px;
+          font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7);
           text-decoration: none; transition: color 0.15s;
         }
         .sp-hero-call:hover { color: #fff; }
@@ -464,7 +557,16 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
 
         @media (max-width: 600px) {
           .sp-main { padding: 48px 0 56px; }
-          .sp-hero { padding: 36px 0 32px; }
+          .sp-cover { min-height: 320px; padding-bottom: 36px; }
+          .sp-nav-row { 
+            flex-direction: column; 
+            align-items: flex-start; 
+            gap: 16px; 
+            padding-top: 24px;
+            margin-bottom: 24px;
+          }
+          .sp-back-btn { padding: 10px 18px; font-size: 13px; }
+          .sp-breadcrumb { font-size: 13px; }
           .sp-hero-h1 { font-size: 1.9rem; }
           .sp-hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; }
         }

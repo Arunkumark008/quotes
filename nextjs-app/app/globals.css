@@ -7,9 +7,10 @@
   --green:      #4aa461;
   --green-dark: #3a8a4e;
   --green-light:#e6f4ea;
-  --plum:       #532e4d;
-  --plum-dark:  #3d1f38;
-  --plum-light: #f2eaf0;
+  /* Legacy plum aliases — now point to green */
+  --plum:       #4aa461;
+  --plum-dark:  #3a8a4e;
+  --plum-light: #e6f4ea;
   --dark:       #0f1623;
   --dark-mid:   #1a2335;
   --body:       #4b5563;
@@ -123,22 +124,22 @@ button { cursor: pointer; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--plum);
+  background: var(--green);
   color: #fff;
   font-weight: 800;
   font-size: 14px;
   padding: 14px 32px;
   border-radius: 50px;
-  border: 2px solid var(--plum);
+  border: 2px solid var(--green);
   transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
   text-decoration: none;
   white-space: nowrap;
 }
 .btn-plum:hover {
-  background: var(--plum-dark);
-  border-color: var(--plum-dark);
+  background: var(--green-dark);
+  border-color: var(--green-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(82,45,76,0.35);
+  box-shadow: 0 8px 24px rgba(74,164,97,0.35);
 }
 
 .btn-ghost {
@@ -203,7 +204,7 @@ button { cursor: pointer; }
 .marquee-track {
   display: flex;
   gap: 16px;
-  animation: marqueeLeft 12s linear infinite;
+  animation: marqueeLeft 25s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -217,7 +218,7 @@ button { cursor: pointer; }
 .reviews-track {
   display: flex;
   gap: 24px;
-  animation: reviewsLeft 18s linear infinite;
+  animation: reviewsLeft 35s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -250,6 +251,115 @@ button { cursor: pointer; }
 }
 
 /* ─────────────────────────────────────────────────────────────
+   FAST PAGE LOAD ANIMATIONS — make site feel snappy
+───────────────────────────────────────────────────────────── */
+
+/* Instant page fade-in */
+main {
+  animation: pageIn 0.3s ease-out;
+}
+@keyframes pageIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Cards, images, sections — staggered reveal */
+.animate-in {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+/* Ultra-smooth hover transitions */
+a, button, .btn-primary, .btn-outline {
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Fast card hovers */
+article, .card, [class*="card"] {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), 
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.25s ease;
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Link underline animations */
+a:not(.btn-primary):not(.btn-outline):not([class*="btn"]) {
+  position: relative;
+}
+
+/* Section entrance animations */
+section {
+  animation: sectionIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sectionIn {
+  from { 
+    opacity: 0.7;
+    transform: translateY(8px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header slide-down on load */
+header {
+  animation: headerIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes headerIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer fade-up on load */
+footer {
+  animation: footerIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes footerIn {
+  from { 
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fast button press feedback */
+.btn-primary:active, .btn-outline:active, button:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Smooth focus states */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  transition: outline-offset 0.15s ease;
+}
+
+/* Preload critical images for speed */
+.hero-bg-preload {
+  content: "";
+  background-image: url('/hero-bg.jpg');
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────
    FLOATING ANIMATION (hero background orbs)
 ───────────────────────────────────────────────────────────── */
 @keyframes float {
@@ -273,7 +383,7 @@ button { cursor: pointer; }
 
 /* ── Gradient text — REMOVED, use solid colors instead ── */
 .gradient-text      { color: var(--green); }
-.gradient-text-plum { color: var(--plum); }
+.gradient-text-plum { color: var(--green); }
 
 /* ── QuestionScout embed — full height, zero scroll ──────────
    Single authoritative block. JS unlock() in HeroSection.tsx

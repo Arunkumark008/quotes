@@ -14,40 +14,9 @@ const fadeLeft = (delay = 0): Variants => ({
   show: { opacity: 1, x: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } },
 });
 
-const ShieldCheck = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    <polyline points="9 12 11 14 15 10"/>
-  </svg>
-);
-const DollarFree = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="1" x2="12" y2="23"/>
-    <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-  </svg>
-);
-const Carriers = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="7" width="20" height="14" rx="2"/>
-    <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-  </svg>
-);
-const StarRating = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </svg>
-);
-
 export default function HeroSection() {
   const { t }         = useLang();
   const { openModal } = useModal();
-
-  const trustItems = [
-    { Icon: ShieldCheck, text: t.trust1 },
-    { Icon: DollarFree,  text: t.trust2 },
-    { Icon: Carriers,    text: t.trust3 },
-    { Icon: StarRating,  text: t.trust4 },
-  ];
 
   return (
     <section className="hero-section">
@@ -56,14 +25,6 @@ export default function HeroSection() {
 
           {/* ── LEFT: copy ─────────────────────────── */}
           <motion.div initial="hidden" animate="show" className="hero-copy">
-
-            {/* AMF badge */}
-            <motion.div variants={fadeUp(0)} style={{ marginBottom: "24px" }}>
-              <span className="hero-badge">
-                <span className="hero-badge-dot" />
-                {t.heroLabel}
-              </span>
-            </motion.div>
 
             {/* Heading */}
             <motion.h1 variants={fadeUp(0.08)} className="hero-h1">
@@ -81,17 +42,16 @@ export default function HeroSection() {
             {/* CTAs */}
             <motion.div variants={fadeUp(0.22)} className="hero-ctas">
               <button onClick={openModal} className="btn-primary">{t.heroCta1}</button>
-              <Link href="/about" className="hero-learn-more">{t.heroCta2}</Link>
-            </motion.div>
-
-            {/* Trust — SVG icons, no emoji */}
-            <motion.div variants={fadeUp(0.3)} className="hero-trust">
-              {trustItems.map(({ Icon, text }) => (
-                <div key={text} className="hero-trust-item">
-                  <span className="hero-trust-icon"><Icon /></span>
-                  <span>{text}</span>
-                </div>
-              ))}
+              <Link href="/quote-calculator" className="hero-calc-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2"/>
+                  <line x1="8" y1="6" x2="16" y2="6"/>
+                  <line x1="8" y1="10" x2="16" y2="10"/>
+                  <line x1="8" y1="14" x2="12" y2="14"/>
+                  <line x1="8" y1="18" x2="10" y2="18"/>
+                </svg>
+                Instant Quote Calculator
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -111,6 +71,7 @@ export default function HeroSection() {
                 frameBorder="0"
                 scrolling="no"
                 allow="clipboard-write"
+                loading="eager"
               />
             </div>
           </motion.div>
@@ -130,19 +91,6 @@ export default function HeroSection() {
         }
         .hero-copy { display: flex; flex-direction: column; }
 
-        .hero-badge {
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 7px 16px; border-radius: 50px;
-          background: rgba(74,164,97,0.1); border: 1px solid rgba(74,164,97,0.3);
-          font-size: 11px; font-weight: 800; letter-spacing: 1.4px;
-          text-transform: uppercase; color: var(--green);
-        }
-        .hero-badge-dot {
-          width: 7px; height: 7px; border-radius: 50%;
-          background: var(--green); flex-shrink: 0;
-          animation: pulseGlow 2.5s ease-in-out infinite;
-        }
-
         .hero-h1 {
           font-size: clamp(2.4rem, 5.5vw, 4rem);
           font-weight: 900; line-height: 1.08;
@@ -161,21 +109,19 @@ export default function HeroSection() {
         }
 
         .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-        .hero-learn-more {
+        .hero-calc-btn {
           display: inline-flex; align-items: center; gap: 8px;
-          padding: 13px 26px; border-radius: 50px;
-          border: 1.5px solid #d1d5db; color: #374151;
-          font-size: 14px; font-weight: 600; background: #fff;
-          text-decoration: none; transition: border-color 0.2s, color 0.2s;
+          padding: 13px 24px; border-radius: 50px;
+          border: 2px solid var(--green); color: var(--green);
+          font-size: 14px; font-weight: 700; background: #fff;
+          text-decoration: none; transition: all 0.2s ease;
         }
-        .hero-learn-more:hover { border-color: var(--green); color: var(--green); }
-
-        .hero-trust { display: flex; flex-wrap: wrap; gap: 18px; }
-        .hero-trust-item {
-          display: flex; align-items: center; gap: 7px;
-          font-size: 12.5px; font-weight: 700; color: #374151;
+        .hero-calc-btn:hover { 
+          background: var(--green); 
+          color: #fff; 
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(74,164,97,0.3);
         }
-        .hero-trust-icon { color: var(--green); display: flex; align-items: center; }
 
         .hero-form-col { width: 100%; }
         .qs-iframe {
@@ -195,10 +141,9 @@ export default function HeroSection() {
           .hero-container { padding-top: 20px !important; padding-bottom: 32px !important; }
           .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.4rem) !important; }
           .hero-ctas { flex-direction: column; gap: 10px; }
-          .hero-ctas button, .hero-ctas .hero-learn-more {
+          .hero-ctas button, .hero-ctas .hero-calc-btn {
             width: 100%; justify-content: center; text-align: center;
           }
-          .hero-trust { gap: 10px; }
           /* Full viewport width, no border-radius, no scrollbar */
           .hero-form-col {
             margin-left: -20px;

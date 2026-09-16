@@ -72,7 +72,7 @@ export default function WhyUsSection() {
           <span className="section-label">{t.whyLabel}</span>
           <h2 className="why-heading">
             {t.whyH2a}{" "}
-            <span style={{ color: "var(--plum)" }}>{t.whyH2b}</span>
+            <span style={{ color: "var(--green)" }}>{t.whyH2b}</span>
           </h2>
         </Animate>
 

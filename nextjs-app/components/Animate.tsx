@@ -11,28 +11,29 @@ interface Props {
   once?: boolean;
 }
 
+// Faster animations for snappy feel
 const variants: Record<string, Variants> = {
   up: {
-    hidden: { opacity: 0, y: 40 },
-    show: (d: number) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: d, ease: [0.22, 1, 0.36, 1] } }),
+    hidden: { opacity: 0, y: 24 },
+    show: (d: number) => ({ opacity: 1, y: 0, transition: { duration: 0.4, delay: d, ease: [0.22, 1, 0.36, 1] } }),
   },
   left: {
-    hidden: { opacity: 0, x: -40 },
-    show: (d: number) => ({ opacity: 1, x: 0, transition: { duration: 0.65, delay: d, ease: [0.22, 1, 0.36, 1] } }),
+    hidden: { opacity: 0, x: -24 },
+    show: (d: number) => ({ opacity: 1, x: 0, transition: { duration: 0.4, delay: d, ease: [0.22, 1, 0.36, 1] } }),
   },
   right: {
-    hidden: { opacity: 0, x: 40 },
-    show: (d: number) => ({ opacity: 1, x: 0, transition: { duration: 0.65, delay: d, ease: [0.22, 1, 0.36, 1] } }),
+    hidden: { opacity: 0, x: 24 },
+    show: (d: number) => ({ opacity: 1, x: 0, transition: { duration: 0.4, delay: d, ease: [0.22, 1, 0.36, 1] } }),
   },
   none: {
     hidden: { opacity: 0 },
-    show: (d: number) => ({ opacity: 1, transition: { duration: 0.5, delay: d, ease: "easeOut" } }),
+    show: (d: number) => ({ opacity: 1, transition: { duration: 0.3, delay: d, ease: "easeOut" } }),
   },
 };
 
 export default function Animate({ children, className, style, delay = 0, direction = "up", once = true }: Props) {
   const ref    = useRef(null);
-  const inView = useInView(ref, { once, margin: "-80px" });
+  const inView = useInView(ref, { once, margin: "-60px" });
   const v      = variants[direction];
 
   return (

@@ -43,9 +43,10 @@ export default async function BlogPostPage(
       <Header />
       <main>
 
-        {/* Hero */}
-        <div style={{ background: "var(--dark)", padding: "56px 0 40px" }}>
-          <div className="container">
+        {/* Hero with cover image */}
+        <section className="blogpost-hero">
+          <div className="blogpost-hero-overlay" />
+          <div className="container blogpost-hero-content">
             {/* Breadcrumb with back button */}
             <div style={{ marginBottom: "20px" }}>
               <Breadcrumb crumbs={[
@@ -61,10 +62,10 @@ export default async function BlogPostPage(
               }}>
                 {post.category}
               </span>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>
+              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)" }}>
                 {post.date}
               </span>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>
+              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)" }}>
                 By {post.author}
               </span>
             </div>
@@ -78,7 +79,7 @@ export default async function BlogPostPage(
               {post.title}
             </h1>
           </div>
-        </div>
+        </section>
 
         {/* Main content */}
         <section style={{ padding: "56px 0 80px", background: "#fff" }}>
@@ -135,7 +136,7 @@ export default async function BlogPostPage(
 
                 {/* Get quote CTA */}
                 <div style={{
-                  background: "var(--plum)", borderRadius: "20px",
+                  background: "var(--green)", borderRadius: "20px",
                   padding: "28px 24px", textAlign: "center",
                 }}>
                   <p style={{
@@ -161,7 +162,7 @@ export default async function BlogPostPage(
                     label="Get My Free Quote →"
                     style={{
                       width: "100%", justifyContent: "center",
-                      background: "#fff", color: "var(--plum)", border: "none",
+                      background: "#fff", color: "var(--green)", border: "none",
                     }}
                   />
                   <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", marginTop: "10px" }}>
@@ -209,6 +210,31 @@ export default async function BlogPostPage(
       <Footer />
 
       <style>{`
+        /* Blog Post Hero with cover image */
+        .blogpost-hero {
+          position: relative;
+          background: linear-gradient(135deg, #1a3a1d 0%, #0f1623 100%);
+          background-image: url('/cover-blog.jpg');
+          background-size: cover;
+          background-position: center;
+          min-height: 340px;
+          display: flex;
+          align-items: flex-end;
+          padding: 0 0 48px;
+        }
+        .blogpost-hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(15,22,35,0.4) 0%, rgba(15,22,35,0.88) 70%, rgba(15,22,35,0.98) 100%);
+        }
+        .blogpost-hero-content {
+          position: relative;
+          z-index: 1;
+        }
+        @media (max-width: 600px) {
+          .blogpost-hero { min-height: 280px; padding-bottom: 36px; }
+        }
+        
         .post-layout { grid-template-columns: 1fr 340px; }
         @media (max-width: 900px) { .post-layout { grid-template-columns: 1fr !important; } }
 

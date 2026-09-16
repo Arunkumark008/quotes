@@ -8,13 +8,6 @@ const fadeUp = (delay = 0): Variants => ({
   show:   { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: "easeOut" } },
 });
 
-const stats = [
-  { value: "40K+", label: "Families Protected" },
-  { value: "20+",  label: "Carrier Partners"   },
-  { value: "25+",  label: "Years Experience"    },
-  { value: "4.9★", label: "Google Rating"       },
-];
-
 const pillars = [
   {
     icon: (
@@ -51,21 +44,6 @@ export default function AboutSection() {
   return (
     <section className="about-section">
       <div className="container about-container">
-
-        {/* ── Stats row — full width, 4 across ── */}
-        <motion.div
-          className="about-stats"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-        >
-          {stats.map((s, i) => (
-            <motion.div key={s.label} variants={fadeUp(i * 0.07)} className="about-stat">
-              <span className="about-stat-value">{s.value}</span>
-              <span className="about-stat-label">{s.label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
 
         {/* ── Two-col: copy left, pillars right ── */}
         <div className="about-body">
@@ -135,43 +113,6 @@ export default function AboutSection() {
           display: flex;
           flex-direction: column;
           gap: 56px;
-        }
-
-        /* ── Stats row ── */
-        .about-stats {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1px;
-          background: var(--border);
-          border: 1px solid var(--border);
-          border-radius: 16px;
-          overflow: hidden;
-        }
-        .about-stat {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          padding: 28px 16px;
-          background: #fff;
-          text-align: center;
-          transition: background 0.2s;
-        }
-        .about-stat:hover { background: var(--bg-soft); }
-        .about-stat-value {
-          font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-          font-weight: 900;
-          color: var(--green);
-          line-height: 1;
-          font-family: var(--font-sora), sans-serif;
-        }
-        .about-stat-label {
-          font-size: 11px;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          color: var(--muted);
         }
 
         /* ── Body two-col ── */
@@ -284,10 +225,6 @@ export default function AboutSection() {
           .about-section { padding: 56px 0; }
           .about-container { gap: 40px; }
 
-          /* Stats: 2×2 on mobile */
-          .about-stats { grid-template-columns: repeat(2, 1fr); }
-          .about-stat { padding: 22px 12px; }
-
           /* Stack body */
           .about-body {
             grid-template-columns: 1fr;
@@ -297,7 +234,6 @@ export default function AboutSection() {
         }
 
         @media (max-width: 400px) {
-          .about-stat-value { font-size: 1.6rem; }
           .about-section { padding: 44px 0; }
         }
       `}</style>

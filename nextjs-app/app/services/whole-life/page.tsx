@@ -11,7 +11,7 @@ const data = {
   titleFr: "Assurance vie entière",
   tagline: "Lifetime protection that never expires — with guaranteed growing cash value.",
   icon: "🏦",
-  color: "#532e4d",
+  color: "#4aa461",
   description: "Whole life insurance is permanent coverage that lasts your entire lifetime, as long as premiums are paid. Unlike term insurance, whole life builds a guaranteed cash value over time that you can borrow against tax-free. It's ideal for estate planning, final expenses, and clients who want the certainty of lifelong protection.",
   highlights: [
     {

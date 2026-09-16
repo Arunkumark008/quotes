@@ -11,7 +11,7 @@ const data = {
   titleFr: "Couverture maladies graves",
   tagline: "A tax-free lump sum payment when you're diagnosed with a serious illness.",
   icon: "🏥",
-  color: "#532e4d",
+  color: "#4aa461",
   description: "Critical illness insurance pays you a tax-free lump sum if you're diagnosed with a covered serious illness — such as cancer, heart attack, or stroke. Unlike disability insurance (which replaces income), CI gives you a single large payment to use however you need: medical costs, travel for treatment, paying off your mortgage, or simply maintaining your lifestyle while you recover.",
   highlights: [
     {

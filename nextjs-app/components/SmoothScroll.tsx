@@ -7,17 +7,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     const lenis = new Lenis({
-      // Butter-smooth: longer duration with a silky cubic bezier feel
-      duration: 1.4,
-      // Custom easing — feels like iOS momentum scroll
-      easing: (t: number) => 1 - Math.pow(1 - t, 4),
+      // Snappy but smooth - reduced for faster feel
+      duration: 1.0,
+      // Faster easing curve - more responsive
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      // Natural touch multiplier — not too fast, not sluggish
-      touchMultiplier: 2.0,
-      // Prevent wheel overshooting
-      wheelMultiplier: 1.0,
+      // Slightly faster wheel response
+      touchMultiplier: 1.8,
+      wheelMultiplier: 1.1,
       infinite: false,
-      // Sync with native scroll for accessibility
       syncTouch: false,
     });
 

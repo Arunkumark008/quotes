@@ -1,12 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
-import InsuranceSolutionsStrip from "@/components/home/InsuranceSolutionsStrip";
-import AboutSection from "@/components/home/AboutSection";
-import ServicesSection from "@/components/home/ServicesSection";
-import WhyUsSection from "@/components/home/WhyUsSection";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
 import PartnersSection from "@/components/home/PartnersSection";
+import AboutSection from "@/components/home/AboutSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
 import BlogSection from "@/components/home/BlogSection";
 import CtaSection from "@/components/home/CtaSection";
 
@@ -16,11 +13,8 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <InsuranceSolutionsStrip />
-        <AboutSection />
-        <ServicesSection />
-        <WhyUsSection />
         <PartnersSection />
+        <AboutSection />
         <TestimonialsSection />
         <BlogSection />
         <CtaSection />

@@ -7,10 +7,48 @@ interface Props {
 }
 
 const RUNNER_ID = "qs-embed-6aa7eb9fc1c5e04d74de874e";
+const FORM_SCRIPT_URL = "https://form.questionscout.com/qs-form-script.min.js";
+const FORM_ID = "616e35ca63bd79140f61b3ef";
+
+// Global flag to track if script is already injected
+let scriptInjected = false;
+let scriptPreloaded = false;
+
+// Preload the script as soon as this module loads (before modal opens)
+if (typeof window !== "undefined" && !scriptPreloaded) {
+  scriptPreloaded = true;
+  
+  // Preconnect to QuestionScout domains for faster handshake
+  const preconnect1 = document.createElement("link");
+  preconnect1.rel = "preconnect";
+  preconnect1.href = "https://form.questionscout.com";
+  preconnect1.crossOrigin = "anonymous";
+  document.head.appendChild(preconnect1);
+  
+  const preconnect2 = document.createElement("link");
+  preconnect2.rel = "preconnect";
+  preconnect2.href = "https://cdn.questionscout.com";
+  preconnect2.crossOrigin = "anonymous";
+  document.head.appendChild(preconnect2);
+
+  // Preload the script with high priority
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "script";
+  link.href = FORM_SCRIPT_URL;
+  document.head.appendChild(link);
+  
+  // Also prefetch the form page itself
+  const prefetchForm = document.createElement("link");
+  prefetchForm.rel = "prefetch";
+  prefetchForm.href = `https://form.questionscout.com/${FORM_ID}`;
+  document.head.appendChild(prefetchForm);
+}
 
 export default function QuoteModal({ open, onClose }: Props) {
-  const injected = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Inject script on first modal open
   useEffect(() => {
     if (!open) return;
 
@@ -18,12 +56,12 @@ export default function QuoteModal({ open, onClose }: Props) {
     document.body.style.overflow = "hidden";
 
     // Inject the Question Scout script exactly once
-    if (!injected.current) {
-      injected.current = true;
+    if (!scriptInjected) {
+      scriptInjected = true;
 
       const s = document.createElement("script");
-      s.src = "https://form.questionscout.com/qs-form-script.min.js";
-      s.setAttribute("data-form-id", "616e35ca63bd79140f61b3ef");
+      s.src = FORM_SCRIPT_URL;
+      s.setAttribute("data-form-id", FORM_ID);
       s.setAttribute("data-url-params", JSON.stringify([{ key: "campaign", value: "" }]));
       s.setAttribute("data-runner-id", RUNNER_ID);
       s.setAttribute("data-dimensions", JSON.stringify(["100%", "620px"]));
@@ -78,9 +116,9 @@ export default function QuoteModal({ open, onClose }: Props) {
           animation: "qs-scale 0.25s ease",
         }}
       >
-        {/* Header */}
+        {/* Header — now green */}
         <div style={{
-          background: "var(--plum)",
+          background: "var(--green)",
           padding: "16px 24px",
           display: "flex", alignItems: "center",
           justifyContent: "space-between", flexShrink: 0,
@@ -88,7 +126,7 @@ export default function QuoteModal({ open, onClose }: Props) {
           <div>
             <p style={{
               fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
-              textTransform: "uppercase", color: "rgba(255,255,255,0.6)",
+              textTransform: "uppercase", color: "rgba(255,255,255,0.7)",
               marginBottom: "3px",
             }}>
               Free Consultation — No Obligation
@@ -101,7 +139,7 @@ export default function QuoteModal({ open, onClose }: Props) {
             onClick={onClose}
             aria-label="Close"
             style={{
-              background: "rgba(255,255,255,0.15)", border: "none",
+              background: "rgba(255,255,255,0.2)", border: "none",
               borderRadius: "50%", width: "34px", height: "34px",
               display: "flex", alignItems: "center", justifyContent: "center",
               cursor: "pointer", color: "#fff", fontSize: "18px",
@@ -113,7 +151,7 @@ export default function QuoteModal({ open, onClose }: Props) {
         </div>
 
         {/* Question Scout form container */}
-        <div style={{ flex: 1, overflow: "hidden", minHeight: "560px" }}>
+        <div ref={containerRef} style={{ flex: 1, overflow: "hidden", minHeight: "560px" }}>
           <div id={RUNNER_ID} style={{ width: "100%" }} />
         </div>
       </div>

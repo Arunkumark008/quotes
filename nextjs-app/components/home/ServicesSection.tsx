@@ -2,7 +2,7 @@
 import Animate from "@/components/Animate";
 
 /* ── Brand SVG icons — each one is a clean single-path icon
-   styled in the green/plum theme, no emoji, no AI-generated art  */
+   styled in the green theme, no emoji, no AI-generated art  */
 const IconTermLife = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -62,7 +62,7 @@ const services = [
     tag: "Permanent",
     desc: "Lifetime coverage that builds guaranteed cash value — never expires, never changes in cost.",
     href: "/services/whole-life",
-    accent: "plum",
+    accent: "green",
   },
   {
     Icon: IconUniversalLife,
@@ -78,7 +78,7 @@ const services = [
     tag: "Lump-Sum Payout",
     desc: "Tax-free cash if you're diagnosed with cancer, heart attack, stroke or 25+ covered conditions.",
     href: "/services/critical-illness",
-    accent: "plum",
+    accent: "green",
   },
   {
     Icon: IconDisability,
@@ -93,8 +93,8 @@ const services = [
     title: "Business Protection",
     tag: "For Owners",
     desc: "Key-person insurance, buy-sell agreements, and corporate coverage for entrepreneurs.",
-    href: "/services",
-    accent: "plum",
+    href: "/services/whole-life",
+    accent: "green",
   },
 ];
 
@@ -158,9 +158,7 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        <Animate style={{ textAlign: "center", marginTop: "48px" }}>
-          <Link href="/services" className="btn-primary">View All Services</Link>
-        </Animate>
+
       </div>
 
       <style>{`
@@ -212,9 +210,9 @@ export default function ServicesSection() {
         .service-card--green:hover {
           border-color: rgba(74,164,97,0.45);
         }
-        /* Plum accent card hover */
+        /* Legacy plum class — now uses green */
         .service-card--plum:hover {
-          border-color: rgba(83,46,77,0.7);
+          border-color: rgba(74,164,97,0.45);
         }
 
         /* Subtle top-left glow dot on hover */
@@ -228,7 +226,7 @@ export default function ServicesSection() {
           transition: opacity 0.3s;
         }
         .service-card--green::before { background: rgba(74,164,97,0.12); }
-        .service-card--plum::before  { background: rgba(83,46,77,0.25); }
+        .service-card--plum::before  { background: rgba(74,164,97,0.12); }
         .service-card:hover::before  { opacity: 1; }
 
         /* ── Icon badge ── */
@@ -247,8 +245,8 @@ export default function ServicesSection() {
           color: var(--green);
         }
         .service-icon--plum {
-          background: rgba(83,46,77,0.5);
-          color: #c9a8c4;
+          background: rgba(74,164,97,0.15);
+          color: var(--green);
         }
 
         /* ── Tag pill ── */
@@ -267,8 +265,8 @@ export default function ServicesSection() {
           color: var(--green);
         }
         .service-tag--plum {
-          background: rgba(83,46,77,0.5);
-          color: #c9a8c4;
+          background: rgba(74,164,97,0.15);
+          color: var(--green);
         }
 
         /* ── Title ── */
@@ -281,7 +279,7 @@ export default function ServicesSection() {
           margin: 0;
         }
         .service-card:hover .service-title { color: var(--green); }
-        .service-card--plum:hover .service-title { color: #c9a8c4; }
+        .service-card--plum:hover .service-title { color: var(--green); }
 
         /* ── Description ── */
         .service-desc {
@@ -303,7 +301,7 @@ export default function ServicesSection() {
           margin-top: 4px;
           transition: gap 0.2s;
         }
-        .service-card--plum .service-cta { color: #c9a8c4; }
+        .service-card--plum .service-cta { color: var(--green); }
         .service-card:hover .service-cta { gap: 8px; }
       `}</style>
     </section>

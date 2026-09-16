@@ -9,15 +9,19 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.googleusercontent.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
+    // Optimize images for faster loading
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year cache
   },
 
   // Compress responses
   compress: true,
 
-  // Faster page loads — inline critical fonts
-  experimental: {
-    optimizeCss: false, // keep off to avoid critters dep issues
-  },
+  // Enable React strict mode for better performance
+  reactStrictMode: true,
+
+  // Faster builds
+  poweredByHeader: false,
 };
 
 export default nextConfig;
