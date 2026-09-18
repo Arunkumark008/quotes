@@ -87,11 +87,8 @@ export default function TestimonialsSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const sheetUrl = process.env.NEXT_PUBLIC_TESTIMONIALS_SHEET_URL;
-    if (!sheetUrl) {
-      setLoading(false);
-      return;
-    }
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbya5IUc8XPTqSNCwLwHLYsInESw0DvBQmTTnmxS8x74Kzxzjzucnml2szciRdoKTzNS/exec";
+    
     fetch(sheetUrl)
       .then(res => res.json())
       .then(data => {
