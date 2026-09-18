@@ -10,7 +10,7 @@ export const translations = {
     insuranceSolutions: "Insurance Solutions",
     whyUs: "Why Us",
     resources: "Resources",
-    blog: "Blog",
+    articles: "Articles",
     navTagline: "PROTECT TODAY. BRIGHTER TOMORROW",
     // Services dropdown
     termLife: "Term Life Insurance", wholeLife: "Whole Life Insurance",
@@ -85,7 +85,7 @@ export const translations = {
     insuranceSolutions: "Solutions d'assurance",
     whyUs: "Pourquoi nous",
     resources: "Ressources",
-    blog: "Blogue",
+    articles: "Articles",
     navTagline: "PROTÉGER AUJOURD'HUI. DEMAIN PLUS LUMINEUX",
     termLife: "Assurance vie temporaire", wholeLife: "Assurance vie entière",
     universalLife: "Assurance vie universelle", criticalIllness: "Couverture maladies graves",

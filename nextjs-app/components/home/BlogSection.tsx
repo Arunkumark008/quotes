@@ -10,7 +10,7 @@ export default async function BlogSection() {
 
         {/* Heading */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <span className="section-label">News &amp; Blog</span>
+          <span className="section-label">News &amp; Articles</span>
           <h2 style={{
             fontSize: "clamp(1.7rem, 2.8vw, 2.4rem)",
             fontWeight: 800, marginTop: "8px", color: "var(--dark)",
@@ -23,7 +23,7 @@ export default async function BlogSection() {
         {posts.length === 0 ? (
           <div style={{ textAlign: "center", padding: "40px 0" }}>
             <p style={{ color: "var(--muted)", marginBottom: "16px" }}>Could not load articles right now.</p>
-            <Link href="/blog" className="btn-outline">View Blog</Link>
+            <Link href="/articles" className="btn-outline">View Articles</Link>
           </div>
         ) : (
           <>
@@ -37,7 +37,7 @@ export default async function BlogSection() {
                 /* Internal link — opens in our site */
                 <Link
                   key={post.slug}
-                  href={`/blog/${post.slug}`}
+                  href={`/articles/${post.slug}`}
                   style={{ textDecoration: "none", display: "block" }}
                 >
                   <article style={{
@@ -102,9 +102,9 @@ export default async function BlogSection() {
               ))}
             </div>
 
-            {/* View all — internal /blog page */}
+            {/* View all — internal /articles page */}
             <div style={{ textAlign: "center", marginTop: "40px" }}>
-              <Link href="/blog" className="btn-outline">
+              <Link href="/articles" className="btn-outline">
                 View All Articles →
               </Link>
             </div>

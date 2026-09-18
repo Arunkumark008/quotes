@@ -6,11 +6,11 @@ import { getAllPosts } from "@/lib/blogger";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Insurance Tips & News — Quotes Life Insurance Blog",
+  title: "Insurance Tips & News — Quotes Life Insurance Articles",
   description: "Expert life insurance tips, guides, and news from Quotes Life Insurance.",
 };
 
-export default async function BlogPage() {
+export default async function ArticlesPage() {
   const posts = await getAllPosts(18);
 
   return (
@@ -26,7 +26,7 @@ export default async function BlogPage() {
             <div style={{ marginBottom: "20px" }}>
               <Breadcrumb crumbs={[
                 { label: "Home", href: "/" },
-                { label: "Blog" },
+                { label: "Articles" },
               ]} />
             </div>
             <span style={{
@@ -40,7 +40,7 @@ export default async function BlogPage() {
               fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 900, color: "#fff",
               fontFamily: "var(--font-sora), sans-serif", letterSpacing: "-0.02em",
             }}>
-              Our Blog
+              Our Articles
             </h1>
             <p style={{
               color: "rgba(255,255,255,0.65)", marginTop: "10px",
@@ -56,16 +56,16 @@ export default async function BlogPage() {
           <div className="container">
             {posts.length === 0 ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
-                <p style={{ color: "var(--muted)", marginBottom: "16px" }}>No posts found.</p>
+                <p style={{ color: "var(--muted)", marginBottom: "16px" }}>No articles found.</p>
                 <a href="https://artstarofficial.blogspot.com" target="_blank" rel="noopener"
                   className="btn-primary" style={{ display: "inline-flex" }}>
-                  Visit Blog ↗
+                  Visit Articles ↗
                 </a>
               </div>
             ) : (
               <div className="blog-grid">
                 {posts.map((post) => (
-                  <Link key={post.slug} href={`/blog/${post.slug}`}
+                  <Link key={post.slug} href={`/articles/${post.slug}`}
                     style={{ textDecoration: "none", display: "block" }}>
                     <article className="blog-card" style={{
                       borderRadius: "16px", overflow: "hidden",

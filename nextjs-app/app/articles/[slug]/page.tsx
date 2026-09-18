@@ -23,9 +23,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) return { title: "Post Not Found" };
+  if (!post) return { title: "Article Not Found" };
   return {
-    title: `${post.title} — Quotes Life Insurance Blog`,
+    title: `${post.title} — Quotes Life Insurance Articles`,
     description: post.excerpt,
   };
 }
@@ -51,7 +51,7 @@ export default async function BlogPostPage(
             <div style={{ marginBottom: "20px" }}>
               <Breadcrumb crumbs={[
                 { label: "Home", href: "/" },
-                { label: "Blog", href: "/blog" },
+                { label: "Articles", href: "/articles" },
                 { label: post.title.slice(0, 40) + (post.title.length > 40 ? "…" : "") },
               ]} />
             </div>
@@ -118,7 +118,7 @@ export default async function BlogPostPage(
                   display: "flex", alignItems: "center", justifyContent: "space-between",
                   flexWrap: "wrap", gap: "12px",
                 }}>
-                  <Link href="/blog" style={{
+                  <Link href="/articles" style={{
                     fontSize: "14px", fontWeight: 600, color: "var(--green)",
                     textDecoration: "none",
                   }}>

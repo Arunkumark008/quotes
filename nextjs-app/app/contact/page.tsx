@@ -14,7 +14,7 @@ const infoCards = [
     ),
     title: "Call Us",
     lines: ["514-662-0403"],
-    note: "New quotes inquiries only",
+    boldNote: "This phone number is for new life insurance quotes inquiry only",
     href: "tel:+15146620403",
   },
   {
@@ -94,7 +94,7 @@ export default function ContactPage() {
                     )
                   )}
                 </div>
-                {c.note && <p className="contact-card-note">{c.note}</p>}
+                {c.boldNote && <p className="contact-card-bold-note">{c.boldNote}</p>}
               </div>
             ))}
           </div>
@@ -259,6 +259,17 @@ export default function ContactPage() {
           color: #9ca3af;
           font-style: italic;
           margin: 0;
+        }
+        .contact-card-bold-note {
+          font-size: 11px;
+          font-weight: 800;
+          color: #dc2626;
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 6px;
+          padding: 8px 12px;
+          margin: 6px 0 0;
+          line-height: 1.4;
         }
 
         /* ── Map ── */
