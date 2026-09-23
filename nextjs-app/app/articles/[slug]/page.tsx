@@ -25,7 +25,7 @@ export async function generateMetadata(
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Article Not Found" };
   return {
-    title: `${post.title} — Quotes Life Insurance Articles`,
+    title: `${post.title} | Quotes Life Insurance Articles`,
     description: post.excerpt,
   };
 }
@@ -144,7 +144,7 @@ export default async function BlogPostPage(
                     textTransform: "uppercase", color: "rgba(255,255,255,0.6)",
                     marginBottom: "8px",
                   }}>
-                    Free — No Obligation
+                    Free, No Obligation
                   </p>
                   <h3 style={{
                     fontSize: "18px", fontWeight: 800, color: "#fff",

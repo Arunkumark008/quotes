@@ -2,7 +2,7 @@ import ServicePageLayout from "@/components/ServicePageLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Critical Illness Insurance in Canada — Quotes Life Insurance",
+  title: "Critical Illness Insurance in Canada | Quotes Life Insurance",
   description: "Tax-free lump sum if you're diagnosed with cancer, heart attack, stroke or 25+ conditions. Compare critical illness quotes. AMF licensed brokers.",
 };
 
@@ -12,11 +12,11 @@ const data = {
   tagline: "A tax-free lump sum payment when you're diagnosed with a serious illness.",
   icon: "🏥",
   color: "#4aa461",
-  description: "Critical illness insurance pays you a tax-free lump sum if you're diagnosed with a covered serious illness — such as cancer, heart attack, or stroke. Unlike disability insurance (which replaces income), CI gives you a single large payment to use however you need: medical costs, travel for treatment, paying off your mortgage, or simply maintaining your lifestyle while you recover.",
+  description: "Critical illness insurance pays you a tax-free lump sum if you're diagnosed with a covered serious illness such as cancer, heart attack, or stroke. Unlike disability insurance (which replaces income), CI gives you a single large payment to use however you need: medical costs, travel for treatment, paying off your mortgage, or simply maintaining your lifestyle while you recover.",
   highlights: [
     {
       heading: "Tax-free lump-sum payment",
-      text: "Upon diagnosis of a covered condition and surviving the waiting period (usually 30 days), you receive a tax-free lump sum — typically $25,000 to $2,000,000 — with no restrictions on how you spend it.",
+      text: "Upon diagnosis of a covered condition and surviving the waiting period (usually 30 days), you receive a tax-free lump sum, typically $25,000 to $2,000,000, with no restrictions on how you spend it.",
     },
     {
       heading: "Covers 25+ critical conditions",
@@ -24,7 +24,7 @@ const data = {
     },
     {
       heading: "Return of premium option",
-      text: "Many carriers offer a return of premium rider — if you never make a claim, you get all your premiums back at a specified age or at death. This makes CI essentially free if you stay healthy.",
+      text: "Many carriers offer a return of premium rider. If you never make a claim, you get all your premiums back at a specified age or at death. This makes CI essentially free if you stay healthy.",
     },
     {
       heading: "Complements your health and life insurance",
@@ -49,7 +49,7 @@ const data = {
     },
     {
       q: "Is the critical illness benefit taxable?",
-      a: "No — the lump sum benefit paid from a personally owned critical illness policy is completely tax-free in Canada.",
+      a: "No. The lump sum benefit paid from a personally owned critical illness policy is completely tax-free in Canada.",
     },
     {
       q: "What is the waiting period?",

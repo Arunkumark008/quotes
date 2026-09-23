@@ -140,12 +140,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
                 <button onClick={openModal} className="sp-hero-cta">
                   Get My Free Quote →
                 </button>
-                <a href="tel:+15146620403" className="sp-hero-call">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.84a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                  514-662-0403
-                </a>
               </div>
             </div>
           </div>
@@ -218,7 +212,7 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
 
                 {/* Quote CTA card */}
                 <div className="sp-cta-card">
-                  <span className="sp-cta-label">Free — No Obligation</span>
+                  <span className="sp-cta-label">Free, No Obligation</span>
                   <h3 className="sp-cta-h3">Get Your Free Quote</h3>
                   <p className="sp-cta-sub">
                     Compare {data.title} rates from 20+ top Canadian carriers in minutes.
@@ -227,13 +221,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
                     Get My Free Quote →
                   </button>
                   <p className="sp-cta-note">AMF Licensed · Lic. #179631</p>
-                </div>
-
-                {/* Call card */}
-                <div className="sp-call-card">
-                  <p className="sp-call-label">Prefer to speak to an advisor?</p>
-                  <a href="tel:+15146620403" className="sp-call-number">514-662-0403</a>
-                  <p className="sp-call-hours">Mon–Fri 9AM–8PM · Sat 10AM–4PM</p>
                 </div>
 
                 {/* Other services */}
@@ -375,12 +362,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
           box-shadow: 0 4px 24px rgba(74,164,97,0.4);
         }
         .sp-hero-cta:hover { background: var(--green-dark); transform: translateY(-2px); }
-        .sp-hero-call {
-          display: inline-flex; align-items: center; gap: 8px;
-          font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7);
-          text-decoration: none; transition: color 0.15s;
-        }
-        .sp-hero-call:hover { color: #fff; }
 
         /* ── Main layout ── */
         .sp-main { background: #fff; padding: 72px 0 80px; }
@@ -509,21 +490,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
           font-size: 11px; color: rgba(255,255,255,0.3);
           width: 100%; text-align: center;
         }
-
-        /* Call card */
-        .sp-call-card {
-          background: var(--bg-soft);
-          border: 1px solid var(--border);
-          border-radius: 14px; padding: 18px 20px;
-        }
-        .sp-call-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-        .sp-call-number {
-          font-size: 18px; font-weight: 800; color: var(--dark);
-          text-decoration: none; display: block; margin-bottom: 4px;
-          transition: color 0.15s;
-        }
-        .sp-call-number:hover { color: var(--green); }
-        .sp-call-hours { font-size: 11px; color: var(--muted); }
 
         /* Other services */
         .sp-other {

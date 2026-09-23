@@ -68,7 +68,7 @@ export default function ContactPage() {
 
             <h1 className="contact-h1">Contact Us</h1>
             <p className="contact-sub">
-              We&apos;re here to help you protect what matters most. Reach out for a free consultation — no fees, no pressure.
+              We&apos;re here to help you protect what matters most. Reach out for a free consultation. No fees, no pressure.
             </p>
 
             {/* CTA — opens the same modal as homepage */}
@@ -94,7 +94,14 @@ export default function ContactPage() {
                     )
                   )}
                 </div>
-                {c.boldNote && <p className="contact-card-bold-note">{c.boldNote}</p>}
+                                {c.boldNote && (
+                  <div className="contact-card-alert">
+                    <svg className="contact-alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span>{c.boldNote}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -106,15 +113,8 @@ export default function ContactPage() {
             <div className="contact-map-header">
               <div>
                 <h2 className="contact-map-h2">Find Our Office</h2>
-                <p className="contact-map-sub">DCW Financial Inc. — 4900 Jean-Talon Ouest, Unit 200, Montréal, QC</p>
+                <p className="contact-map-sub">DCW Financial Inc., 4900 Jean-Talon Ouest, Unit 200, Montréal, QC</p>
               </div>
-              <span className="contact-amf-pill">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <polyline points="9 12 11 14 15 10"/>
-                </svg>
-                AMF Lic. #179631
-              </span>
             </div>
             <div className="contact-map-wrap">
               <iframe
@@ -135,9 +135,25 @@ export default function ContactPage() {
       <style>{`
         /* ── Hero ── */
         .contact-hero {
-          background: var(--dark);
-          padding: 56px 0 52px;
+          position: relative;
+          padding: 80px 0 100px;
           text-align: center;
+          overflow: hidden;
+        }
+        .contact-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(15, 22, 35, 0.88) 0%, rgba(74, 164, 97, 0.75) 100%),
+                      url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80') center/cover no-repeat;
+          z-index: 0;
+        }
+        .contact-hero .container {
+          position: relative;
+          z-index: 1;
         }
 
         .contact-h1 {
@@ -150,9 +166,9 @@ export default function ContactPage() {
           margin-bottom: 14px;
         }
         .contact-sub {
-          font-size: 15px;
-          color: rgba(255,255,255,0.55);
-          max-width: 480px;
+          font-size: 17px;
+          color: rgba(255,255,255,0.75);
+          max-width: 500px;
           margin: 0 auto 28px;
           line-height: 1.7;
         }
@@ -261,15 +277,45 @@ export default function ContactPage() {
           margin: 0;
         }
         .contact-card-bold-note {
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 800;
           color: #dc2626;
           background: #fef2f2;
-          border: 1px solid #fecaca;
-          border-radius: 6px;
-          padding: 8px 12px;
-          margin: 6px 0 0;
-          line-height: 1.4;
+          border: 2px solid #f87171;
+          border-radius: 8px;
+          padding: 14px 16px;
+          margin: 12px 0 0;
+          line-height: 1.5;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+        }
+
+        /* Alert box for phone disclaimer */
+        .contact-card-alert {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 13px;
+          font-weight: 700;
+          color: #fff;
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+          border: none;
+          border-radius: 10px;
+          padding: 14px 18px;
+          margin: 16px 0 0;
+          line-height: 1.45;
+          text-align: left;
+          box-shadow: 0 4px 16px rgba(185, 28, 28, 0.35);
+        }
+        .contact-alert-icon {
+          flex-shrink: 0;
+          color: #fff;
+          background: rgba(255,255,255,0.2);
+          border-radius: 50%;
+          padding: 6px;
+          width: 32px;
+          height: 32px;
         }
 
         /* ── Map ── */

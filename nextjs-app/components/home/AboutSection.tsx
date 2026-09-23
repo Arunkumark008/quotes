@@ -25,7 +25,7 @@ const pillars = [
         <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
       </svg>
     ),
-    text: "100% Free Advice — Always",
+    text: "100% Free Advice, Always",
   },
   {
     icon: (

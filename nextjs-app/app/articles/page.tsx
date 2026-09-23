@@ -6,7 +6,7 @@ import { getAllPosts } from "@/lib/blogger";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Insurance Tips & News — Quotes Life Insurance Articles",
+  title: "Insurance Tips & News | Quotes Life Insurance Articles",
   description: "Expert life insurance tips, guides, and news from Quotes Life Insurance.",
 };
 

@@ -22,9 +22,9 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Quotes Life Insurance — Free Life Insurance Quotes in Canada",
+  title: "Quotes Life Insurance | Free Life Insurance Quotes in Canada",
   description:
-    "Quotes Life Insurance compares 20+ top Canadian carriers — Manulife, Desjardins, Foresters and more — to find you the best coverage at the lowest rate. AMF Licensed #179631.",
+    "Quotes Life Insurance compares 20+ top Canadian carriers like Manulife, Desjardins, Foresters and more to find you the best coverage at the lowest rate. AMF Licensed #179631.",
   keywords:
     "life insurance Canada, term life insurance, whole life insurance, critical illness, disability insurance, AMF licensed broker, Montreal",
 };

@@ -1,20 +1,25 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-
-const navLinks = [
-  { label: "Home",       href: "/" },
-  { label: "About Us",   href: "/about" },
-  { label: "Articles",   href: "/articles" },
-  { label: "Contact Us", href: "/contact" },
-];
-
-const serviceLinks = [
-  { label: "Term Life Insurance",      href: "/services/term-life" },
-  { label: "Whole Life Insurance",     href: "/services/whole-life" },
-  { label: "Disability Insurance",     href: "/services/disability" },
-];
+import { useLang } from "@/lib/i18n";
 
 export default function Footer() {
+  const { t } = useLang();
+
+  const navLinks = [
+    { label: t.home,       href: "/" },
+    { label: t.about,      href: "/about" },
+    { label: t.articles,   href: "/articles" },
+    { label: t.joinTeam,   href: "/careers" },
+    { label: t.contact,    href: "/contact" },
+  ];
+
+  const serviceLinks = [
+    { label: t.termLife,       href: "/services/term-life" },
+    { label: t.wholeLife,      href: "/services/whole-life" },
+    { label: t.disability,     href: "/services/disability" },
+  ];
+
   return (
     <footer className="footer">
       <div className="container footer-grid">
@@ -32,7 +37,7 @@ export default function Footer() {
           </Link>
 
           <p className="footer-desc">
-            A family-built, client-first brokerage. We compare 20+ Canadian carriers to find you the best coverage — at no cost.
+            {t.footerTagline} {t.footerFounders}
           </p>
 
           {/* Contact chips */}
@@ -42,7 +47,7 @@ export default function Footer() {
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
               </svg>
-              Email Us
+              Email
             </a>
           </div>
 
@@ -52,13 +57,13 @@ export default function Footer() {
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               <polyline points="9 12 11 14 15 10"/>
             </svg>
-            AMF Licensed · Lic. #179631 · Firm #608808
+            {t.footerAmfNumbers}
           </p>
         </div>
 
         {/* Col 2 — Quick Links */}
         <div className="footer-col">
-          <h4 className="footer-col-h">Quick Links</h4>
+          <h4 className="footer-col-h">{t.footerLinks}</h4>
           <ul className="footer-list">
             {navLinks.map((l) => (
               <li key={l.label}>
@@ -72,7 +77,7 @@ export default function Footer() {
 
         {/* Col 3 — Services */}
         <div className="footer-col">
-          <h4 className="footer-col-h">Services</h4>
+          <h4 className="footer-col-h">{t.footerServices}</h4>
           <ul className="footer-list">
             {serviceLinks.map((s) => (
               <li key={s.label}>
@@ -90,14 +95,12 @@ export default function Footer() {
       <div className="footer-bar">
         <div className="container footer-bar-inner">
           <p className="footer-copy">
-            © {new Date().getFullYear()} Quotes Life Insurance — DCW Financial Inc. All rights reserved.
+            © {new Date().getFullYear()} {t.footerCopyright}
           </p>
           <div className="footer-bar-links">
-            <Link href="/privacy-policy" className="footer-bar-link">Privacy Policy</Link>
+            <Link href="/privacy-policy" className="footer-bar-link">{t.footerPrivacy}</Link>
             <span className="footer-bar-sep">·</span>
-            <Link href="/terms" className="footer-bar-link">Terms of Service</Link>
-            <span className="footer-bar-sep">·</span>
-            <a href="https://lautorite.qc.ca" target="_blank" rel="noopener noreferrer" className="footer-bar-link">Verify AMF ↗</a>
+            <Link href="/terms" className="footer-bar-link">{t.footerTerms}</Link>
           </div>
         </div>
       </div>

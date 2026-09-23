@@ -9,6 +9,7 @@ const logos = [
   { file: "empire life.png",       name: "Empire Life" },
   { file: "foresters.png",         name: "Foresters" },
   { file: "humania.png",           name: "Humania Assurance" },
+  { file: "iafinancial.png",       name: "iA Financial" },
   { file: "ivari.png",             name: "Ivari" },
   { file: "manulife.png",          name: "Manulife" },
   { file: "uv insurance.png",      name: "UV Insurance" },

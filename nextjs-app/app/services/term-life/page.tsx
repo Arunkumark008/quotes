@@ -2,62 +2,62 @@ import ServicePageLayout from "@/components/ServicePageLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Term Life Insurance in Canada — Quotes Life Insurance",
-  description: "Compare term life insurance quotes from 20+ top Canadian carriers. Affordable coverage for 10, 20 or 30 years. Free advice from AMF licensed brokers.",
+  title: "Term Life Insurance in Canada | Quotes Life Insurance",
+  description: "Compare term life insurance from 20+ Canadian carriers. Get the best rates for 10, 20, or 30-year term coverage. AMF licensed brokers.",
 };
 
 const data = {
   title: "Term Life Insurance",
   titleFr: "Assurance vie temporaire",
-  tagline: "The most affordable way to protect your family during the years they need it most.",
+  tagline: "Maximum coverage at the lowest cost. Simple, straightforward protection.",
   icon: "📋",
   color: "#4aa461",
-  description: "Term life insurance provides pure death benefit coverage for a fixed period — typically 10, 20, or 30 years. If you pass away during the term, your beneficiaries receive the tax-free death benefit. It's the simplest, most cost-effective form of life insurance and is ideal for families who need large coverage amounts at low premiums.",
+  description: "Term life insurance provides pure death benefit coverage for a fixed period, typically 10, 20, or 30 years. If you pass away during the term, your beneficiaries receive the tax-free death benefit. It's the simplest, most cost-effective form of life insurance and is ideal for families who need large coverage amounts at low premiums.",
   highlights: [
     {
-      heading: "Lowest premiums for the highest coverage",
-      text: "Term life gives you the most coverage per dollar. A healthy 35-year-old can secure $500,000 of coverage for as little as $25–$40/month.",
+      heading: "Affordable coverage",
+      text: "Term insurance is the most cost-effective way to get substantial coverage. A healthy 35-year-old can get $500,000 of 20-year term coverage for under $30/month.",
     },
     {
-      heading: "Flexible term lengths",
-      text: "Choose a term that matches your needs — 10, 15, 20, 25, or 30 years. Most families align the term with their mortgage length or until children are financially independent.",
+      heading: "Choose your term length",
+      text: "Choose a term that matches your needs: 10, 15, 20, 25, or 30 years. Most families align the term with their mortgage length or until children are financially independent.",
     },
     {
-      heading: "Convertible to permanent coverage",
-      text: "Most term policies can be converted to whole or universal life without a new medical exam — giving you flexibility as your needs change.",
+      heading: "Convertible to permanent",
+      text: "Most term policies can be converted to whole or universal life without a new medical exam. This gives you flexibility as your needs change.",
     },
     {
-      heading: "Rates locked in at purchase",
-      text: "Your premium is fixed for the entire term. Buy when you're young and healthy to lock in the lowest possible rate for decades.",
+      heading: "Level premiums",
+      text: "Your premium stays the same for the entire term. No surprises, no increases. Lock in your rate while you're young and healthy.",
     },
   ],
   bestFor: [
-    "Young families with a mortgage",
-    "Parents with dependent children",
-    "Income replacement",
-    "Business loan protection",
-    "First-time life insurance buyers",
+    "Young families with mortgages and children",
+    "Anyone replacing income for dependents",
+    "Business owners needing key-person coverage",
+    "Those wanting maximum coverage at minimum cost",
+    "People with temporary financial obligations",
   ],
   faqs: [
     {
-      q: "What happens when my term ends?",
-      a: "At the end of your term, you can renew (usually at a higher rate), convert to permanent insurance, or let the policy lapse. If you're still healthy, you can apply for a new term policy at competitive rates.",
+      q: "What happens when my term expires?",
+      a: "You can renew annually at a higher rate, convert to permanent insurance, or let the policy lapse. Many people buy a new term policy if still insurable.",
     },
     {
-      q: "How much term life insurance do I need?",
-      a: "A common rule is 10–12x your annual income. Factor in your mortgage balance, outstanding debts, and how many years your family would need income replacement.",
+      q: "How much term insurance do I need?",
+      a: "A common rule is 10-15x your annual income, plus outstanding debts. We'll help you calculate the right amount based on your family's specific needs.",
     },
     {
-      q: "Can I get term life insurance without a medical exam?",
-      a: "Yes — some carriers like Canada Protection Plan offer no-medical term policies. These carry higher premiums but are ideal if you have health conditions.",
+      q: "Can I get term insurance without a medical exam?",
+      a: "Yes. Some carriers like Canada Protection Plan offer no-medical term policies. These carry higher premiums but are ideal if you have health conditions.",
     },
     {
-      q: "Is the death benefit taxable in Canada?",
-      a: "No. Life insurance death benefits paid to a named beneficiary are completely tax-free in Canada.",
+      q: "Is term insurance better than whole life?",
+      a: "It depends on your goals. Term is better for temporary needs and maximum coverage. Whole life is better for lifetime coverage and cash value accumulation.",
     },
     {
-      q: "What carriers do you compare for term life?",
-      a: "We compare Manulife, Desjardins, iA Financial, Foresters, Canada Protection Plan, Empire Life, Humania, Assumption Life, and more — over 20 carriers in total.",
+      q: "Which insurance companies do you work with?",
+      a: "We compare Manulife, Desjardins, iA Financial, Foresters, Canada Protection Plan, Empire Life, Humania, Assumption Life, and more. Over 20 carriers in total.",
     },
   ],
 };

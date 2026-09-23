@@ -88,7 +88,7 @@ export default function QuoteModal({ open, onClose }: Props) {
               color: "rgba(255,255,255,0.7)",
               marginBottom: "3px",
             }}>
-              Free Consultation — No Obligation
+              Free Consultation, No Obligation
             </p>
             <h3 style={{ 
               color: "#fff", 

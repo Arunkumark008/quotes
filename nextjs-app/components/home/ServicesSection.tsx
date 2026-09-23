@@ -60,7 +60,7 @@ const services = [
     Icon: IconWholeLife,
     title: "Whole Life Insurance",
     tag: "Permanent",
-    desc: "Lifetime coverage that builds guaranteed cash value — never expires, never changes in cost.",
+    desc: "Lifetime coverage that builds guaranteed cash value. Never expires, never changes in cost.",
     href: "/services/whole-life",
     accent: "green",
   },

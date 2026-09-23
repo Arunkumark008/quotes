@@ -127,7 +127,6 @@ export default function Header() {
             </span>
           </div>
           <div className="topbar-right">
-            <span className="amf-badge">AMF Lic. #179631</span>
             {/* Language toggle switch */}
             <div className="lang-toggle" onClick={() => setLang(lang === "en" ? "fr" : "en")}>
               <span className={`lang-toggle-label${lang === "en" ? " lang-toggle-label--active" : ""}`}>EN</span>
@@ -208,6 +207,7 @@ export default function Header() {
 
             <Link href="/about"   className="nav-link">{t.about}</Link>
             <Link href="/articles"    className="nav-link">{t.articles}</Link>
+            <Link href="/careers" className="nav-link">Join Our Team</Link>
             <Link href="/contact" className="nav-link">{t.contact}</Link>
           </div>
 
@@ -275,6 +275,9 @@ export default function Header() {
             </Link>
             <Link href="/articles" onClick={() => setMobileOpen(false)} className="mobile-link">
               {t.articles}
+            </Link>
+            <Link href="/careers" onClick={() => setMobileOpen(false)} className="mobile-link">
+              Join Our Team
             </Link>
             <Link href="/contact" onClick={() => setMobileOpen(false)} className="mobile-link">
               {t.contact}

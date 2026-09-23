@@ -19,6 +19,7 @@ const carrierLogos = [
   { name: "Humania", logo: "/company/humania.png" },
   { name: "Empire Life", logo: "/company/empire life.png" },
   { name: "Desjardins", logo: "/company/desjardins.png" },
+  { name: "iA Financial", logo: "/company/iafinancial.png" },
   { name: "Assumption", logo: "/company/assumption.png" },
   { name: "Ivari", logo: "/company/ivari.png" },
   { name: "Edge Benefits", logo: "/company/edgebenefits.png" },
@@ -45,12 +46,14 @@ const founders = [
     name: "Denesh Logeswaran",
     role: "Co-Founder & Director",
     bio: "A builder and mentor to a growing team of licensed agents across Canada, Denesh focuses on practical, tax-aware protection strategies for families and entrepreneurs.",
+    image: "/testimonials/denesh.jpg",
   },
   {
     initials: "LM",
     name: "Lucia Medina",
     role: "Co-Founder & Director",
     bio: "Known for her client advocacy and meticulous service standards, Lucia leads our service operations to ensure prompt follow-through and proactive policy maintenance.",
+    image: "/testimonials/lucia.jpg",
   },
 ];
 
@@ -184,7 +187,6 @@ export default function AboutPage() {
                     </div>
                   ))}
                 </motion.div>
-                <p className="ab-carrier-more">+ 20 more carriers available</p>
                 <motion.p variants={fadeUp(0.14)} className="ab-disclosure">
                   <strong>Disclosure:</strong> DCW Financial Inc. is independently owned and operated. Experior Financial Group Inc. is our contracted Managing General Agency (MGA) and is not an insurer. Carrier availability and product eligibility may vary by province and client circumstances.
                 </motion.p>
@@ -277,7 +279,13 @@ export default function AboutPage() {
               {founders.map((f, i) => (
                 <motion.div key={f.name} variants={fadeUp(i * 0.1)} className="ab-founder-card">
                   <div className="ab-founder-avatar">
-                    {f.initials}
+                    <Image 
+                      src={f.image} 
+                      alt={f.name} 
+                      width={100} 
+                      height={100}
+                      style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "50%", objectPosition: "top" }}
+                    />
                   </div>
                   <div className="ab-founder-body">
                     <h3 className="ab-founder-name">{f.name}</h3>
@@ -501,10 +509,11 @@ export default function AboutPage() {
         .ab-carriers-h3 { font-size: 18px; font-weight: 800; color: var(--dark); }
         .ab-carriers-desc { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.6; }
         .ab-carrier-logos { 
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          display: flex;
+          flex-wrap: wrap;
           gap: 12px;
           margin-bottom: 16px;
+          justify-content: center;
         }
         .ab-carrier-logo-item {
           background: #fff;
@@ -515,6 +524,8 @@ export default function AboutPage() {
           align-items: center;
           justify-content: center;
           min-height: 50px;
+          width: calc(20% - 10px);
+          min-width: 100px;
           transition: box-shadow 0.2s, transform 0.2s;
         }
         .ab-carrier-logo-item:hover {
@@ -601,11 +612,15 @@ export default function AboutPage() {
           transform: translateY(-4px);
         }
         .ab-founder-avatar {
-          width: 60px; height: 60px; border-radius: 50%;
+          width: 100px; height: 100px; border-radius: 50%;
           background: var(--green);
           display: flex; align-items: center; justify-content: center;
           color: #fff; font-size: 18px; font-weight: 800;
           flex-shrink: 0;
+          overflow: hidden;
+        }
+        .ab-founder-avatar img {
+          object-position: top !important;
         }
         .ab-founder-name { font-size: 17px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
         .ab-founder-role { font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 12px; }

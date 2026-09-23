@@ -204,7 +204,7 @@ button { cursor: pointer; }
 .marquee-track {
   display: flex;
   gap: 16px;
-  animation: marqueeLeft 6s linear infinite;
+  animation: marqueeLeft 25s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
