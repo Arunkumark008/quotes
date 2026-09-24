@@ -220,7 +220,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageProps }) 
                   <button onClick={openModal} className="sp-cta-btn">
                     Get My Free Quote →
                   </button>
-                  <p className="sp-cta-note">AMF Licensed · Lic. #179631</p>
                 </div>
 
                 {/* Other services */}

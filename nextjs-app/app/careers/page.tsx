@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
+import { useLang } from "@/lib/i18n";
 
 interface JobListing {
   id: number;
@@ -31,14 +32,42 @@ const fallbackJobs: JobListing[] = [
   },
 ];
 
+// Skeleton loader component for job cards
+function JobCardSkeleton() {
+  return (
+    <div className="job-card job-card--skeleton">
+      <div className="job-card-top">
+        <div className="skeleton skeleton-icon"></div>
+        <div className="skeleton skeleton-badge"></div>
+      </div>
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tag"></div>
+      <div className="job-meta">
+        <div className="skeleton skeleton-meta"></div>
+        <div className="skeleton skeleton-meta"></div>
+      </div>
+      <div className="skeleton skeleton-desc"></div>
+      <div className="skeleton skeleton-desc short"></div>
+      <div className="job-qualifications skeleton-qual">
+        <div className="skeleton skeleton-qual-header"></div>
+        <div className="skeleton skeleton-qual-text"></div>
+      </div>
+      <div className="job-card-footer">
+        <div className="skeleton skeleton-btn"></div>
+      </div>
+    </div>
+  );
+}
+
 export default function CareersPage() {
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
+  const { t } = useLang();
 
   useEffect(() => {
     // Fetch jobs from Google Sheet
-    fetch("https://script.google.com/macros/s/AKfycbx3EDWt9H3mJEx1gIlKJtRVkE_SbkAn_od5LGnz4lM-wZ8DMSyHv02IK7FHQNXdxXTh/exec?action=getJobs")
+    fetch("https://script.google.com/macros/s/AKfycbwzoJbeZvpRY3_pVNgjgDuLqBSsJ9GVuu5MdVTvtne2vIpVyX8YBPWFg23aQ0mhKPFqkg/exec?action=getJobs")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.data.length > 0) {
@@ -66,10 +95,10 @@ export default function CareersPage() {
         <section className="careers-hero">
           <div className="careers-hero-bg"></div>
           <div className="container careers-hero-content">
-            <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Join Our Team" }]} />
+            <Breadcrumb crumbs={[{ label: t.home, href: "/" }, { label: t.joinTeam }]} />
             <div className="careers-hero-text">
-              <h1>Join Our Team</h1>
-              <p>Build a rewarding career helping families protect what matters most</p>
+              <h1>{t.careersHeroTitle}</h1>
+              <p>{t.careersHeroSub}</p>
             </div>
           </div>
         </section>
@@ -77,67 +106,21 @@ export default function CareersPage() {
         {/* Job Listings */}
         <section className="careers-section">
           <div className="container">
-            {/* Why Join Us */}
-            <div className="benefits-section">
-              <h2>Why Join DCW Financial?</h2>
-              <div className="benefits-grid">
-                <div className="benefit-card">
-                  <div className="benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <line x1="12" y1="1" x2="12" y2="23"/>
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                    </svg>
-                  </div>
-                  <h4>Competitive Commission</h4>
-                  <p>Earn unlimited income based on your performance</p>
-                </div>
-                <div className="benefit-card">
-                  <div className="benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-                    </svg>
-                  </div>
-                  <h4>Training & Support</h4>
-                  <p>Comprehensive training and ongoing mentorship</p>
-                </div>
-                <div className="benefit-card">
-                  <div className="benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                  </div>
-                  <h4>Flexible Schedule</h4>
-                  <p>Work on your own terms with flexible hours</p>
-                </div>
-                <div className="benefit-card">
-                  <div className="benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <line x1="18" y1="20" x2="18" y2="10"/>
-                      <line x1="12" y1="20" x2="12" y2="4"/>
-                      <line x1="6" y1="20" x2="6" y2="14"/>
-                    </svg>
-                  </div>
-                  <h4>Career Growth</h4>
-                  <p>Clear path to leadership and management roles</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Open Positions */}
+            {/* Open Positions - Now at top */}
             <div className="jobs-section">
-              <h2>Open Positions</h2>
+              <h2>{t.careersOpenPositions}</h2>
               
               {loading ? (
-                <div className="loading-wrap">
-                  <div className="spinner" />
+                <div className="jobs-grid">
+                  <JobCardSkeleton />
+                  <JobCardSkeleton />
+                  <JobCardSkeleton />
                 </div>
               ) : activeJobs.length === 0 ? (
                 <div className="no-jobs">
                   <div className="no-jobs-icon">📋</div>
-                  <h3>No Open Positions Right Now</h3>
-                  <p>We don&apos;t have any openings at the moment, but we&apos;re always looking for talented people. Send your resume to <a href="mailto:careers@quotes-lifeinsurance.com">careers@quotes-lifeinsurance.com</a> and we&apos;ll keep you in mind for future opportunities.</p>
+                  <h3>{t.careersNoJobs}</h3>
+                  <p>{t.careersNoJobsDesc} <a href="mailto:careers@quotes-lifeinsurance.com">careers@quotes-lifeinsurance.com</a></p>
                 </div>
               ) : (
                 <div className="jobs-grid">
@@ -153,9 +136,9 @@ export default function CareersPage() {
                         </div>
                         <div className="job-badges">
                           {job.status.toLowerCase() === "closed" ? (
-                            <span className="job-status job-status--closed">Closed</span>
+                            <span className="job-status job-status--closed">{t.careersClosed}</span>
                           ) : (
-                            <span className="job-status job-status--open">Hiring</span>
+                            <span className="job-status job-status--open">{t.careersHiring}</span>
                           )}
                         </div>
                       </div>
@@ -197,7 +180,7 @@ export default function CareersPage() {
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <polyline points="22 4 12 14.01 9 11.01"/>
                           </svg>
-                          <strong>Requirements</strong>
+                          <strong>{t.careersRequirements}</strong>
                         </div>
                         <p>{job.qualifications}</p>
                       </div>
@@ -210,7 +193,7 @@ export default function CareersPage() {
                               <circle cx="12" cy="12" r="10"/>
                               <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
                             </svg>
-                            Position Closed
+                            {t.careersPositionClosed}
                           </button>
                         ) : (
                           <button 
@@ -223,7 +206,7 @@ export default function CareersPage() {
                               }
                             }}
                           >
-                            Apply Now
+                            {t.careersApplyNow}
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <path d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>
@@ -234,6 +217,54 @@ export default function CareersPage() {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Why Join Us - Now below Open Positions */}
+            <div className="benefits-section">
+              <h2>{t.careersWhyTitle}</h2>
+              <div className="benefits-grid">
+                <div className="benefit-card">
+                  <div className="benefit-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </div>
+                  <h4>{t.careersBenefit1Title}</h4>
+                  <p>{t.careersBenefit1Desc}</p>
+                </div>
+                <div className="benefit-card">
+                  <div className="benefit-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                  </div>
+                  <h4>{t.careersBenefit2Title}</h4>
+                  <p>{t.careersBenefit2Desc}</p>
+                </div>
+                <div className="benefit-card">
+                  <div className="benefit-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                  <h4>{t.careersBenefit3Title}</h4>
+                  <p>{t.careersBenefit3Desc}</p>
+                </div>
+                <div className="benefit-card">
+                  <div className="benefit-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <line x1="18" y1="20" x2="18" y2="10"/>
+                      <line x1="12" y1="20" x2="12" y2="4"/>
+                      <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                  </div>
+                  <h4>{t.careersBenefit4Title}</h4>
+                  <p>{t.careersBenefit4Desc}</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -248,8 +279,8 @@ export default function CareersPage() {
                 </svg>
               </button>
               <div className="modal-header">
-                <h2>Apply for {selectedJob.jobTitle}</h2>
-                <p>Fill out the form below to submit your application</p>
+                <h2>{t.careersApplyNow} - {selectedJob.jobTitle}</h2>
+                <p>{t.contactFormMessage}</p>
               </div>
               <div className="modal-body">
                 <iframe
@@ -315,7 +346,7 @@ export default function CareersPage() {
 
         /* Benefits */
         .benefits-section {
-          margin-bottom: 60px;
+          margin-top: 60px;
         }
         .benefits-section h2 {
           font-size: 28px;
@@ -616,6 +647,73 @@ export default function CareersPage() {
         }
         @keyframes spin {
           to { transform: rotate(360deg); }
+        }
+
+        /* Skeleton Loader */
+        .job-card--skeleton {
+          pointer-events: none;
+        }
+        .skeleton {
+          background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+          border-radius: 8px;
+        }
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .skeleton-icon {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+        }
+        .skeleton-badge {
+          width: 70px;
+          height: 28px;
+          border-radius: 20px;
+        }
+        .skeleton-title {
+          height: 24px;
+          width: 75%;
+          margin: 20px 24px 12px;
+        }
+        .skeleton-tag {
+          height: 28px;
+          width: 90px;
+          margin: 0 24px 16px;
+          border-radius: 6px;
+        }
+        .skeleton-meta {
+          height: 18px;
+          width: 100px;
+        }
+        .skeleton-desc {
+          height: 14px;
+          width: 90%;
+          margin: 0 24px 8px;
+        }
+        .skeleton-desc.short {
+          width: 60%;
+          margin-bottom: 16px;
+        }
+        .skeleton-qual {
+          background: #f5f5f5;
+          padding: 16px 18px;
+        }
+        .skeleton-qual-header {
+          height: 16px;
+          width: 120px;
+          margin-bottom: 12px;
+        }
+        .skeleton-qual-text {
+          height: 14px;
+          width: 80%;
+        }
+        .skeleton-btn {
+          height: 50px;
+          width: 100%;
+          border-radius: 12px;
         }
 
         /* Modal */

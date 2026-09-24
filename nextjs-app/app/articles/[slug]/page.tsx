@@ -165,9 +165,6 @@ export default async function BlogPostPage(
                       background: "#fff", color: "var(--green)", border: "none",
                     }}
                   />
-                  <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", marginTop: "10px" }}>
-                    AMF Licensed · Lic. #179631
-                  </p>
                 </div>
 
                 {/* Services links */}

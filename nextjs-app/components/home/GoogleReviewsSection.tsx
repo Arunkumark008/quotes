@@ -1,22 +1,17 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-interface GoogleReview {
-  author_name: string;
-  author_url: string;
-  profile_photo_url: string;
-  rating: number;
-  relative_time_description: string;
-  text: string;
-  time: number;
-}
-
-interface PlaceData {
+interface Testimonial {
+  id: number;
   name: string;
+  location: string;
+  serviceType: string;
+  contentType: string;
+  testimonial: string;
+  videoUrl: string;
   rating: number;
-  totalReviews: number;
-  reviews: GoogleReview[];
-  url?: string;
+  date: string;
+  avatarUrl: string;
 }
 
 // Get initials from name
@@ -47,43 +42,6 @@ function ReviewerAvatar({ name, photoUrl }: { name: string; photoUrl: string }) 
   );
 }
 
-// Fallback data for DCW Financial Inc.
-const fallbackData: PlaceData = {
-  name: "DCW Financial Inc.",
-  rating: 5.0,
-  totalReviews: 5,
-  url: "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/",
-  reviews: [
-    {
-      author_name: "Happy Client",
-      author_url: "#",
-      profile_photo_url: "",
-      rating: 5,
-      relative_time_description: "a month ago",
-      text: "Excellent service! They helped me find the perfect life insurance policy for my family. Very professional and knowledgeable team.",
-      time: 0,
-    },
-    {
-      author_name: "Satisfied Customer",
-      author_url: "#",
-      profile_photo_url: "",
-      rating: 5,
-      relative_time_description: "2 months ago",
-      text: "Great experience working with DCW Financial. They took the time to explain all my options and found me the best rate.",
-      time: 0,
-    },
-    {
-      author_name: "Grateful Family",
-      author_url: "#",
-      profile_photo_url: "",
-      rating: 5,
-      relative_time_description: "3 months ago",
-      text: "Highly recommend! Professional, responsive, and truly care about their clients. Made the whole insurance process easy.",
-      time: 0,
-    },
-  ],
-};
-
 // Google "G" logo SVG
 function GoogleLogo({ size = 24 }: { size?: number }) {
   return (
@@ -109,46 +67,53 @@ function Stars({ rating, size = 16 }: { rating: number; size?: number }) {
   );
 }
 
+// Skeleton loader for reviews
+function ReviewSkeleton() {
+  return (
+    <div className="gr-review-card gr-skeleton-card">
+      <div className="gr-review-header">
+        <div className="gr-skeleton gr-skeleton-avatar"></div>
+        <div className="gr-reviewer-info">
+          <div className="gr-skeleton gr-skeleton-name"></div>
+          <div className="gr-skeleton gr-skeleton-time"></div>
+        </div>
+        <div className="gr-skeleton gr-skeleton-icon"></div>
+      </div>
+      <div className="gr-skeleton gr-skeleton-stars"></div>
+      <div className="gr-skeleton gr-skeleton-text"></div>
+      <div className="gr-skeleton gr-skeleton-text short"></div>
+    </div>
+  );
+}
+
 export default function GoogleReviewsSection() {
-  const [placeData, setPlaceData] = useState<PlaceData>(fallbackData);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
-  const [googleMapsUrl, setGoogleMapsUrl] = useState(fallbackData.url || "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/");
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  const googleMapsUrl = "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/";
 
   useEffect(() => {
-    fetch("/api/google-reviews")
+    // Fetch testimonials from Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbwzoJbeZvpRY3_pVNgjgDuLqBSsJ9GVuu5MdVTvtne2vIpVyX8YBPWFg23aQ0mhKPFqkg/exec")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && data.data) {
-          setPlaceData({
-            name: data.data.name || fallbackData.name,
-            rating: data.data.rating || fallbackData.rating,
-            totalReviews: data.data.totalReviews || fallbackData.totalReviews,
-            url: data.data.url || fallbackData.url,
-            reviews: data.data.reviews?.length > 0 
-              ? data.data.reviews.map((r: GoogleReview) => ({
-                  author_name: r.author_name,
-                  author_url: r.author_url || "#",
-                  profile_photo_url: r.profile_photo_url,
-                  rating: r.rating,
-                  relative_time_description: r.relative_time_description,
-                  text: r.text,
-                  time: r.time,
-                }))
-              : fallbackData.reviews,
-          });
-          if (data.data.url) {
-            setGoogleMapsUrl(data.data.url);
-          }
+        if (data.success && data.data.length > 0) {
+          setTestimonials(data.data);
         }
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
+  // Calculate average rating
+  const avgRating = testimonials.length > 0 
+    ? (testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length).toFixed(1)
+    : "5.0";
+
   // Duplicate reviews for infinite scroll effect
-  const displayReviews = [...placeData.reviews, ...placeData.reviews];
+  const displayReviews = [...testimonials, ...testimonials];
 
   return (
     <section className="google-reviews-section">
@@ -161,11 +126,11 @@ export default function GoogleReviewsSection() {
               <span>Google Reviews</span>
             </div>
             <div className="gr-rating-summary">
-              <span className="gr-rating-number">{placeData.rating}</span>
+              <span className="gr-rating-number">{avgRating}</span>
               <div className="gr-rating-details">
-                <Stars rating={Math.round(placeData.rating)} size={20} />
+                <Stars rating={Math.round(parseFloat(avgRating))} size={20} />
                 <span className="gr-review-count">
-                  Based on {placeData.totalReviews} review{placeData.totalReviews !== 1 ? "s" : ""}
+                  Based on {testimonials.length || 5} review{testimonials.length !== 1 ? "s" : ""}
                 </span>
               </div>
             </div>
@@ -182,8 +147,18 @@ export default function GoogleReviewsSection() {
 
         {/* Carousel */}
         {loading ? (
-          <div className="gr-loading">
-            <div className="gr-spinner" />
+          <div className="gr-carousel-wrapper">
+            <div className="gr-carousel-track gr-skeleton-track">
+              <ReviewSkeleton />
+              <ReviewSkeleton />
+              <ReviewSkeleton />
+              <ReviewSkeleton />
+              <ReviewSkeleton />
+            </div>
+          </div>
+        ) : testimonials.length === 0 ? (
+          <div className="gr-empty">
+            <p>No reviews yet. Be the first to review!</p>
           </div>
         ) : (
           <div 
@@ -196,18 +171,15 @@ export default function GoogleReviewsSection() {
               className={`gr-carousel-track ${isPaused ? "paused" : ""}`}
             >
               {displayReviews.map((review, idx) => (
-                <a
+                <div
                   key={idx}
-                  href={review.author_url || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="gr-review-card"
                 >
                   <div className="gr-review-header">
-                    <ReviewerAvatar name={review.author_name} photoUrl={review.profile_photo_url} />
+                    <ReviewerAvatar name={review.name} photoUrl={review.avatarUrl} />
                     <div className="gr-reviewer-info">
-                      <h4 className="gr-reviewer-name">{review.author_name}</h4>
-                      <span className="gr-review-time">{review.relative_time_description}</span>
+                      <h4 className="gr-reviewer-name">{review.name}</h4>
+                      <span className="gr-review-time">{review.location}</span>
                     </div>
                     <div className="gr-google-icon">
                       <GoogleLogo size={20} />
@@ -215,9 +187,9 @@ export default function GoogleReviewsSection() {
                   </div>
                   <Stars rating={review.rating} size={18} />
                   <p className="gr-review-text">
-                    {review.text || "Gave us 5 stars on Google!"}
+                    {review.testimonial || "Gave us 5 stars!"}
                   </p>
-                </a>
+                </div>
               ))}
             </div>
           </div>
@@ -329,6 +301,63 @@ export default function GoogleReviewsSection() {
         }
         @keyframes gr-spin {
           to { transform: rotate(360deg); }
+        }
+
+        /* Skeleton Styles */
+        .gr-skeleton {
+          background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+          background-size: 200% 100%;
+          animation: gr-shimmer 1.5s infinite;
+          border-radius: 8px;
+        }
+        @keyframes gr-shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .gr-skeleton-card {
+          pointer-events: none;
+        }
+        .gr-skeleton-track {
+          animation: none !important;
+        }
+        .gr-skeleton-avatar {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+        .gr-skeleton-name {
+          height: 16px;
+          width: 100px;
+          margin-bottom: 6px;
+        }
+        .gr-skeleton-time {
+          height: 12px;
+          width: 70px;
+        }
+        .gr-skeleton-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+        }
+        .gr-skeleton-stars {
+          height: 18px;
+          width: 100px;
+          margin: 8px 0;
+        }
+        .gr-skeleton-text {
+          height: 14px;
+          width: 100%;
+          margin-bottom: 8px;
+        }
+        .gr-skeleton-text.short {
+          width: 70%;
+        }
+
+        .gr-empty {
+          text-align: center;
+          padding: 60px 20px;
+          color: var(--muted);
         }
 
         /* Carousel */

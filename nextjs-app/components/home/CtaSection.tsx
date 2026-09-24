@@ -32,7 +32,7 @@ export default function CtaSection() {
 
           {/* Trust line */}
           <p className="cta-trust">
-            AMF Lic. #179631 &nbsp;·&nbsp; No fees ever
+            {t.ctaTrust}
           </p>
 
         </Animate>

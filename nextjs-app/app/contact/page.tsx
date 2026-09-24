@@ -1,57 +1,62 @@
 "use client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useModal } from "@/lib/modal";
-
-const infoCards = [
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.84a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    ),
-    title: "Call Us",
-    lines: ["514-662-0403"],
-    boldNote: "This phone number is for new life insurance quotes inquiry only",
-    href: "tel:+15146620403",
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-      </svg>
-    ),
-    title: "Email Us",
-    lines: ["info@quotes-lifeinsurance.com"],
-    href: "mailto:info@quotes-lifeinsurance.com",
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="12 6 12 12 16 14"/>
-      </svg>
-    ),
-    title: "Business Hours",
-    lines: ["Mon – Fri: 9AM – 8PM EST", "Saturday: 10AM – 4PM EST"],
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-    ),
-    title: "Our Office",
-    lines: ["4900 Jean-Talon Ouest", "Unit 200, Montréal, QC H4P 1W9"],
-  },
-];
+import { useLang } from "@/lib/i18n";
 
 export default function ContactPage() {
   const { openModal } = useModal();
+  const { t, lang } = useLang();
+
+  const infoCards = [
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.84a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      ),
+      title: lang === "fr" ? "Appelez-nous" : "Call Us",
+      lines: ["514-662-0403"],
+      boldNote: lang === "fr" 
+        ? "Ce numéro de téléphone est réservé aux demandes de nouvelles soumissions d'assurance vie"
+        : "This phone number is for new life insurance quotes inquiry only",
+      href: "tel:+15146620403",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      ),
+      title: lang === "fr" ? "Écrivez-nous" : "Email Us",
+      lines: ["info@quotes-lifeinsurance.com"],
+      href: "mailto:info@quotes-lifeinsurance.com",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      ),
+      title: lang === "fr" ? "Heures d'ouverture" : "Business Hours",
+      lines: lang === "fr" 
+        ? ["Lun – Ven : 9h – 20h HNE", "Samedi : 10h – 16h HNE"]
+        : ["Mon – Fri: 9AM – 8PM EST", "Saturday: 10AM – 4PM EST"],
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      ),
+      title: lang === "fr" ? "Notre bureau" : "Our Office",
+      lines: ["4900 Jean-Talon Ouest", "Unit 200, Montréal, QC H4P 1W9"],
+    },
+  ];
 
   return (
     <>
@@ -62,18 +67,18 @@ export default function ContactPage() {
         <section className="contact-hero">
           <div className="container">
             <Breadcrumb crumbs={[
-              { label: "Home", href: "/" },
-              { label: "Contact" },
+              { label: t.home, href: "/" },
+              { label: t.contact },
             ]} />
 
-            <h1 className="contact-h1">Contact Us</h1>
+            <h1 className="contact-h1">{t.contactHeroTitle}</h1>
             <p className="contact-sub">
-              We&apos;re here to help you protect what matters most. Reach out for a free consultation. No fees, no pressure.
+              {t.contactHeroSub}
             </p>
 
             {/* CTA — opens the same modal as homepage */}
             <button onClick={openModal} className="contact-cta-btn">
-              Get My Free Quote →
+              {t.heroCta1}
             </button>
           </div>
         </section>
@@ -94,7 +99,7 @@ export default function ContactPage() {
                     )
                   )}
                 </div>
-                                {c.boldNote && (
+                {c.boldNote && (
                   <div className="contact-card-alert">
                     <svg className="contact-alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
@@ -112,7 +117,7 @@ export default function ContactPage() {
           <div className="container">
             <div className="contact-map-header">
               <div>
-                <h2 className="contact-map-h2">Find Our Office</h2>
+                <h2 className="contact-map-h2">{t.contactMapTitle}</h2>
                 <p className="contact-map-sub">DCW Financial Inc., 4900 Jean-Talon Ouest, Unit 200, Montréal, QC</p>
               </div>
             </div>

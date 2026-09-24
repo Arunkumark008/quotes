@@ -22,6 +22,26 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      {/* Quote Calculator Strip */}
+      <div className="footer-quote-strip">
+        <div className="container footer-quote-inner">
+          <div className="footer-quote-text">
+            <h3>Get Your Free Quote</h3>
+            <p>Compare rates from 20+ Canadian carriers in minutes</p>
+          </div>
+          <Link href="/quote-calculator" className="footer-quote-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="6" x2="16" y2="6"/>
+              <line x1="8" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="12" y2="14"/>
+              <line x1="8" y1="18" x2="10" y2="18"/>
+            </svg>
+            Open Quote Calculator
+          </Link>
+        </div>
+      </div>
+
       <div className="container footer-grid">
 
         {/* Col 1 — Brand */}
@@ -107,6 +127,58 @@ export default function Footer() {
 
       <style>{`
         .footer { background: #0e1420; color: #fff; }
+
+        /* Quote Calculator Strip */
+        .footer-quote-strip {
+          background: linear-gradient(135deg, var(--green) 0%, #3a9d5c 100%);
+          padding: 32px 0;
+        }
+        .footer-quote-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          flex-wrap: wrap;
+        }
+        .footer-quote-text h3 {
+          font-size: 20px;
+          font-weight: 800;
+          color: #fff;
+          margin-bottom: 4px;
+        }
+        .footer-quote-text p {
+          font-size: 14px;
+          color: rgba(255,255,255,0.8);
+          margin: 0;
+        }
+        .footer-quote-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 28px;
+          background: #fff;
+          color: var(--green);
+          font-size: 15px;
+          font-weight: 700;
+          border-radius: 50px;
+          text-decoration: none;
+          transition: all 0.25s;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .footer-quote-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 600px) {
+          .footer-quote-inner {
+            flex-direction: column;
+            text-align: center;
+          }
+          .footer-quote-btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
 
         /* 3-col grid — brand left, quick links center, services right */
         .footer-grid {

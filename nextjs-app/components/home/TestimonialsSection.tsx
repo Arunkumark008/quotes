@@ -107,6 +107,55 @@ function Avatar({ name, avatarUrl, size = 48 }: { name: string; avatarUrl?: stri
   );
 }
 
+// Skeleton loader component for testimonials
+function TestimonialSkeleton() {
+  return (
+    <div className="featured skeleton-featured">
+      <div className="featured-content">
+        <div className="featured-quote skeleton-quote-wrap">
+          <div className="skeleton skeleton-quote-line"></div>
+          <div className="skeleton skeleton-quote-line"></div>
+          <div className="skeleton skeleton-quote-line short"></div>
+        </div>
+      </div>
+      <div className="author-row">
+        <div className="skeleton skeleton-avatar"></div>
+        <div className="author-info">
+          <div className="skeleton skeleton-name"></div>
+          <div className="skeleton skeleton-location"></div>
+        </div>
+        <div className="author-meta">
+          <div className="skeleton skeleton-service"></div>
+          <div className="skeleton skeleton-stars"></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TestimonialListSkeleton() {
+  return (
+    <div className="testimonials-list">
+      <div className="list-header">
+        <div className="skeleton skeleton-list-title"></div>
+        <div className="skeleton skeleton-list-count"></div>
+      </div>
+      <div className="list-scroll">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="list-card skeleton-list-card">
+            <div className="skeleton skeleton-list-avatar"></div>
+            <div className="list-card-content">
+              <div className="skeleton skeleton-list-name"></div>
+              <div className="skeleton skeleton-list-loc"></div>
+              <div className="skeleton skeleton-list-text"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -114,7 +163,7 @@ export default function TestimonialsSection() {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const sheetUrl = "https://script.google.com/macros/s/AKfycbx3EDWt9H3mJEx1gIlKJtRVkE_SbkAn_od5LGnz4lM-wZ8DMSyHv02IK7FHQNXdxXTh/exec";
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbwzoJbeZvpRY3_pVNgjgDuLqBSsJ9GVuu5MdVTvtne2vIpVyX8YBPWFg23aQ0mhKPFqkg/exec";
     
     fetch(sheetUrl)
       .then(res => res.json())
@@ -153,7 +202,18 @@ export default function TestimonialsSection() {
     return (
       <section className="testimonials-section">
         <div className="container">
-          <div className="loading-wrap"><div className="spinner" /></div>
+          {/* Header */}
+          <div className="header">
+            <span className="badge">Client Stories</span>
+            <h2>What Our Clients Say</h2>
+            <p>Real experiences from families we&apos;ve helped protect</p>
+          </div>
+
+          {/* Skeleton Content */}
+          <div className="content-grid">
+            <TestimonialSkeleton />
+            <TestimonialListSkeleton />
+          </div>
         </div>
         <style>{styles}</style>
       </section>
@@ -746,6 +806,93 @@ const styles = `
   }
   @keyframes spin {
     to { transform: rotate(360deg); }
+  }
+
+  /* Skeleton Loader Styles */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  .skeleton-featured {
+    pointer-events: none;
+  }
+  .skeleton-quote-wrap {
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .skeleton-quote-line {
+    height: 20px;
+    width: 100%;
+  }
+  .skeleton-quote-line.short {
+    width: 60%;
+  }
+  .skeleton-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .skeleton-name {
+    height: 18px;
+    width: 120px;
+    margin-bottom: 6px;
+  }
+  .skeleton-location {
+    height: 14px;
+    width: 80px;
+  }
+  .skeleton-service {
+    height: 24px;
+    width: 80px;
+    border-radius: 12px;
+  }
+  .skeleton-stars {
+    height: 18px;
+    width: 90px;
+  }
+
+  /* Skeleton list */
+  .skeleton-list-card {
+    pointer-events: none;
+  }
+  .skeleton-list-title {
+    height: 18px;
+    width: 100px;
+  }
+  .skeleton-list-count {
+    height: 24px;
+    width: 80px;
+    border-radius: 12px;
+  }
+  .skeleton-list-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .skeleton-list-name {
+    height: 16px;
+    width: 100px;
+    margin-bottom: 6px;
+  }
+  .skeleton-list-loc {
+    height: 12px;
+    width: 70px;
+    margin-bottom: 8px;
+  }
+  .skeleton-list-text {
+    height: 32px;
+    width: 100%;
   }
 
   /* Mobile */

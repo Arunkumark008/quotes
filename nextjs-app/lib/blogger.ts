@@ -1,5 +1,5 @@
-const BLOG_ID   = "1808952853777607677"; // from the feed id
-const FEED_BASE = "https://artstarofficial.blogspot.com/feeds/posts/default";
+const BLOG_ID   = ""; // Will be extracted from feed
+const FEED_BASE = "https://quotes-lifeinsurance007.blogspot.com/feeds/posts/default";
 
 export interface BlogPost {
   slug:     string;
@@ -29,7 +29,7 @@ function getThumb(e: any): string {
 function getLink(e: any): string {
   const links: any[] = e.link ?? [];
   return links.find((l: any) => l.rel === "alternate")?.href
-    ?? "https://artstarofficial.blogspot.com";
+    ?? "https://quotes-lifeinsurance007.blogspot.com";
 }
 
 function fmtDate(s: string): string {
@@ -81,28 +81,17 @@ export async function getAllPosts(max = 20): Promise<BlogPost[]> {
   }
 }
 
-// ── Fetch single post by ID — uses Blogger's direct entry URL ─────────────────
-// This is O(1) — fetches ONE post, not all 50
+// ── Fetch single post by ID — searches in full feed ─────────────────
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    // Direct entry URL: much faster than fetching all posts
-    const url = `https://www.blogger.com/feeds/${BLOG_ID}/posts/default/${slug}?alt=json`;
-    const res = await fetch(url, { next: { revalidate: 3600 } });
-
-    if (res.ok) {
-      const data = await res.json();
-      const entry = data.entry;
-      if (entry) return entryToPost(entry);
-    }
-
-    // Fallback: search in full feed
-    const fallback = await fetch(
-      `${FEED_BASE}?alt=json&max-results=50`,
+    // Fetch all posts and find the one with matching slug
+    const res = await fetch(
+      `${FEED_BASE}?alt=json&max-results=100`,
       { next: { revalidate: 3600 } }
     );
-    if (!fallback.ok) return null;
-    const fallbackData = await fallback.json();
-    const entries: any[] = fallbackData.feed?.entry ?? [];
+    if (!res.ok) return null;
+    const data = await res.json();
+    const entries: any[] = data.feed?.entry ?? [];
     const entry = entries.find((e: any) => makeSlug(e.id?.$t ?? "") === slug);
     return entry ? entryToPost(entry) : null;
   } catch {

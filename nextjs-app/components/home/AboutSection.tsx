@@ -16,7 +16,8 @@ const pillars = [
         <polyline points="9 12 11 14 15 10"/>
       </svg>
     ),
-    text: "AMF Licensed & Regulated",
+    textEn: "Fully Regulated & Licensed",
+    textFr: "Entièrement réglementé et agréé",
   },
   {
     icon: (
@@ -25,7 +26,8 @@ const pillars = [
         <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
       </svg>
     ),
-    text: "100% Free Advice, Always",
+    textEn: "100% Free Advice, Always",
+    textFr: "Conseils 100% gratuits, toujours",
   },
   {
     icon: (
@@ -34,12 +36,13 @@ const pillars = [
         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
     ),
-    text: "Truly Independent Broker",
+    textEn: "Truly Independent Broker",
+    textFr: "Courtier vraiment indépendant",
   },
 ];
 
 export default function AboutSection() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <section className="about-section">
@@ -70,7 +73,7 @@ export default function AboutSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right — pillars + AMF badge */}
+          {/* Right — pillars */}
           <motion.div
             className="about-right"
             initial="hidden"
@@ -79,25 +82,11 @@ export default function AboutSection() {
           >
             {/* Pillar cards */}
             {pillars.map((p, i) => (
-              <motion.div key={p.text} variants={fadeUp(i * 0.08)} className="about-pillar">
+              <motion.div key={p.textEn} variants={fadeUp(i * 0.08)} className="about-pillar">
                 <span className="about-pillar-icon">{p.icon}</span>
-                <span className="about-pillar-text">{p.text}</span>
+                <span className="about-pillar-text">{lang === "fr" ? p.textFr : p.textEn}</span>
               </motion.div>
             ))}
-
-            {/* AMF badge */}
-            <motion.div variants={fadeUp(0.24)} className="about-amf">
-              <div className="about-amf-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <polyline points="9 12 11 14 15 10"/>
-                </svg>
-              </div>
-              <div>
-                <p className="about-amf-title">{t.aboutAmf}</p>
-                <p className="about-amf-sub">{t.aboutAmfSub}</p>
-              </div>
-            </motion.div>
           </motion.div>
 
         </div>

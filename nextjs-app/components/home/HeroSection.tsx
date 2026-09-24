@@ -42,15 +42,11 @@ export default function HeroSection() {
             {/* CTAs */}
             <motion.div variants={fadeUp(0.22)} className="hero-ctas">
               <button onClick={openModal} className="btn-primary">{t.heroCta1}</button>
-              <Link href="/quote-calculator" className="hero-calc-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="4" y="2" width="16" height="20" rx="2"/>
-                  <line x1="8" y1="6" x2="16" y2="6"/>
-                  <line x1="8" y1="10" x2="16" y2="10"/>
-                  <line x1="8" y1="14" x2="12" y2="14"/>
-                  <line x1="8" y1="18" x2="10" y2="18"/>
+              <Link href="/about" className="hero-learn-btn">
+                {t.heroCta2}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-                Instant Quote Calculator
               </Link>
             </motion.div>
           </motion.div>
@@ -109,18 +105,23 @@ export default function HeroSection() {
         }
 
         .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-        .hero-calc-btn {
+        .hero-learn-btn {
           display: inline-flex; align-items: center; gap: 8px;
           padding: 13px 24px; border-radius: 50px;
-          border: 2px solid var(--green); color: var(--green);
+          border: 2px solid var(--border); color: var(--dark);
           font-size: 14px; font-weight: 700; background: #fff;
           text-decoration: none; transition: all 0.2s ease;
         }
-        .hero-calc-btn:hover { 
-          background: var(--green); 
-          color: #fff; 
+        .hero-learn-btn:hover { 
+          border-color: var(--green);
+          color: var(--green);
           transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(74,164,97,0.3);
+        }
+        .hero-learn-btn svg {
+          transition: transform 0.2s;
+        }
+        .hero-learn-btn:hover svg {
+          transform: translateX(3px);
         }
 
         .hero-form-col { width: 100%; }
@@ -141,7 +142,7 @@ export default function HeroSection() {
           .hero-container { padding-top: 20px !important; padding-bottom: 32px !important; }
           .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.4rem) !important; }
           .hero-ctas { flex-direction: column; gap: 10px; }
-          .hero-ctas button, .hero-ctas .hero-calc-btn {
+          .hero-ctas button, .hero-ctas .hero-learn-btn {
             width: 100%; justify-content: center; text-align: center;
           }
           /* Full viewport width, no border-radius, no scrollbar */
