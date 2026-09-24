@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 
-// KADS Enterprises in Chennai, India
-const PLACE_ID = ""; // Will be found via search
-
 export async function GET() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
   
@@ -11,13 +8,13 @@ export async function GET() {
   }
 
   try {
-    // Search for KADS Enterprises in Chennai
-    const searchUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=KADS%20Enterprises%20Chennai&inputtype=textquery&fields=place_id,name,formatted_address&key=${apiKey}`;
+    // Search for DCW Financial Inc. in Montreal
+    const searchUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=DCW%20Financial%20Inc%20Montreal&inputtype=textquery&fields=place_id,name,formatted_address&key=${apiKey}`;
     
     const searchRes = await fetch(searchUrl);
     const searchData = await searchRes.json();
     
-    let placeId = PLACE_ID;
+    let placeId = "";
     if (searchData.candidates && searchData.candidates.length > 0) {
       placeId = searchData.candidates[0].place_id;
     }

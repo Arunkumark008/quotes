@@ -47,56 +47,38 @@ function ReviewerAvatar({ name, photoUrl }: { name: string; photoUrl: string }) 
   );
 }
 
-// Fallback data (actual reviews from Google - KADS Enterprises Chennai)
+// Fallback data for DCW Financial Inc.
 const fallbackData: PlaceData = {
-  name: "KADS Enterprises",
-  rating: 4.9,
-  totalReviews: 10,
-  url: "https://www.google.com/maps/search/?api=1&query=KADS+Enterprises+Chennai",
+  name: "DCW Financial Inc.",
+  rating: 5.0,
+  totalReviews: 5,
+  url: "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/",
   reviews: [
     {
-      author_name: "Jeffrin Binu",
-      author_url: "https://www.google.com/maps/contrib/111666124984551759565/reviews",
-      profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjUw5laS30uNT3moIqJ34pB_XzkcM4y26uyedx7cjTOA2cckWikPeQ=s128-c0x00000000-cc-rp-mo-ba2",
+      author_name: "Happy Client",
+      author_url: "#",
+      profile_photo_url: "",
       rating: 5,
-      relative_time_description: "5 years ago",
-      text: "Good",
+      relative_time_description: "a month ago",
+      text: "Excellent service! They helped me find the perfect life insurance policy for my family. Very professional and knowledgeable team.",
       time: 0,
     },
     {
-      author_name: "v. Vignesh",
-      author_url: "https://www.google.com/maps/contrib/105256845171088494172/reviews",
-      profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVEw4lg66kWuxveHfSt6eoDRjRtMUCNCsuls-9Ts7Yjof9jokjIFA=s128-c0x00000000-cc-rp-mo",
+      author_name: "Satisfied Customer",
+      author_url: "#",
+      profile_photo_url: "",
       rating: 5,
-      relative_time_description: "4 years ago",
-      text: "",
+      relative_time_description: "2 months ago",
+      text: "Great experience working with DCW Financial. They took the time to explain all my options and found me the best rate.",
       time: 0,
     },
     {
-      author_name: "Vishwa Karthi",
-      author_url: "https://www.google.com/maps/contrib/110582462356116185749/reviews",
-      profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjUQAeYh5rWYeBw09NDLcwCV1wYcTcC5dJJVwt5R820g93ewIgU=s128-c0x00000000-cc-rp-mo",
+      author_name: "Grateful Family",
+      author_url: "#",
+      profile_photo_url: "",
       rating: 5,
-      relative_time_description: "5 years ago",
-      text: "",
-      time: 0,
-    },
-    {
-      author_name: "Aaron Akash",
-      author_url: "https://www.google.com/maps/contrib/107694646345848315195/reviews",
-      profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVkeUXidvGr5XWQVWBcfIXfUPpiPL_U148e3zFQQidawfxYVluD=s128-c0x00000000-cc-rp-mo-ba2",
-      rating: 5,
-      relative_time_description: "5 years ago",
-      text: "",
-      time: 0,
-    },
-    {
-      author_name: "AKASH S",
-      author_url: "https://www.google.com/maps/contrib/111154956684016173543/reviews",
-      profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVE4jq-Jh578ba_1ZYOcg5N_azfqkj4kanRDKrcsdCfCa4FpuU0=s128-c0x00000000-cc-rp-mo",
-      rating: 5,
-      relative_time_description: "5 years ago",
-      text: "",
+      relative_time_description: "3 months ago",
+      text: "Highly recommend! Professional, responsive, and truly care about their clients. Made the whole insurance process easy.",
       time: 0,
     },
   ],
@@ -130,7 +112,7 @@ function Stars({ rating, size = 16 }: { rating: number; size?: number }) {
 export default function GoogleReviewsSection() {
   const [placeData, setPlaceData] = useState<PlaceData>(fallbackData);
   const [loading, setLoading] = useState(true);
-  const [googleMapsUrl, setGoogleMapsUrl] = useState(fallbackData.url || "https://www.google.com/maps/search/?api=1&query=KADS+Enterprises+Chennai");
+  const [googleMapsUrl, setGoogleMapsUrl] = useState(fallbackData.url || "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/");
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 

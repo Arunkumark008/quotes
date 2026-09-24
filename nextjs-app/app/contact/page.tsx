@@ -118,12 +118,12 @@ export default function ContactPage() {
             </div>
             <div className="contact-map-wrap">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.8!2d-73.6580!3d45.4940!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc918e6b6b6b6b7%3A0x0!2s4900+Jean-Talon+Ouest%2C+Montreal%2C+QC+H4P+1W9!5e0!3m2!1sen!2sca!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2796.6061254419405!2d-73.64843809999999!3d45.497875799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91928ed15a155%3A0x471b789683cbda83!2sDCW%20FINANCIAL%20INC.!5e0!3m2!1sen!2sin!4v1790217242050!5m2!1sen!2sin"
                 width="100%" height="400"
                 style={{ border: 0, display: "block" }}
                 allowFullScreen loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
-                title="Quotes Life Insurance Office"
+                title="DCW Financial Inc. Office Location"
               />
             </div>
           </div>
