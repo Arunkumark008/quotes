@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 
 // ── Translations ──────────────────────────────────────────
 export const translations = {
@@ -254,7 +254,67 @@ const Ctx = createContext<LangCtx>({
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
-  const setLang = useCallback((l: Lang) => setLangState(l), []);
+  const [initialized, setInitialized] = useState(false);
+  
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    // Save user preference to localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("preferred-lang", l);
+    }
+  }, []);
+
+  // Auto-detect language based on location (Quebec = French, else English)
+  useEffect(() => {
+    const detectLanguage = async () => {
+      // Check if user has a saved preference first
+      const savedLang = localStorage.getItem("preferred-lang") as Lang | null;
+      if (savedLang && (savedLang === "en" || savedLang === "fr")) {
+        setLangState(savedLang);
+        setInitialized(true);
+        return;
+      }
+
+      // Check browser language preference
+      const browserLang = navigator.language.toLowerCase();
+      if (browserLang.startsWith("fr")) {
+        // Browser is French, likely Quebec or France
+        setLangState("fr");
+        setInitialized(true);
+        return;
+      }
+
+      // Try to detect location via IP geolocation
+      try {
+        const response = await fetch("https://ipapi.co/json/", {
+          signal: AbortSignal.timeout(3000) // 3 second timeout
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          // Check if user is in Quebec (region_code: "QC" or region contains "Quebec")
+          const isQuebec = 
+            data.region_code === "QC" || 
+            data.region?.toLowerCase().includes("quebec") ||
+            data.region?.toLowerCase().includes("québec");
+          
+          if (isQuebec) {
+            setLangState("fr");
+          } else {
+            setLangState("en");
+          }
+        }
+      } catch {
+        // Geolocation failed, default to English
+        setLangState("en");
+      }
+      
+      setInitialized(true);
+    };
+
+    detectLanguage();
+  }, []);
+
   return (
     <Ctx.Provider value={{ lang, t: translations[lang], setLang }}>
       {children}

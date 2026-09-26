@@ -6,6 +6,7 @@ interface Props {
   carrierName: string;
   theme?: "green" | "purple";
   hideColorSwitcher?: boolean;
+  logoSize?: "normal" | "large" | "xlarge";
 }
 
 /**
@@ -15,7 +16,8 @@ export default function CarrierLogoOverride({
   logoSrc, 
   carrierName, 
   theme = "green",
-  hideColorSwitcher = false 
+  hideColorSwitcher = false,
+  logoSize = "normal"
 }: Props) {
   useEffect(() => {
     // Create a style element to override the logo and theme
@@ -45,13 +47,21 @@ export default function CarrierLogoOverride({
       `
       : "";
 
+    // Logo size
+    const sizeMap = {
+      normal: "45px",
+      large: "60px",
+      xlarge: "75px"
+    };
+    const maxHeight = sizeMap[logoSize];
+
     // Create new style
     const style = document.createElement("style");
     style.id = styleId;
     style.textContent = `
       .logo-wrap img {
         content: url("${logoSrc}") !important;
-        max-height: 45px !important;
+        max-height: ${maxHeight} !important;
         width: auto !important;
       }
       ${themeColors}
@@ -73,7 +83,7 @@ export default function CarrierLogoOverride({
         localStorage.removeItem("brand-color");
       }
     };
-  }, [logoSrc, theme, hideColorSwitcher]);
+  }, [logoSrc, theme, hideColorSwitcher, logoSize]);
 
   return null;
 }

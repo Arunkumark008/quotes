@@ -1,17 +1,22 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-interface Testimonial {
-  id: number;
-  name: string;
-  location: string;
-  serviceType: string;
-  contentType: string;
-  testimonial: string;
-  videoUrl: string;
+interface GoogleReview {
+  author_name: string;
+  author_url: string;
+  profile_photo_url: string;
   rating: number;
-  date: string;
-  avatarUrl: string;
+  relative_time_description: string;
+  text: string;
+  time: number;
+}
+
+interface PlaceData {
+  name: string;
+  rating: number;
+  totalReviews: number;
+  reviews: GoogleReview[];
+  url?: string;
 }
 
 // Get initials from name
@@ -87,33 +92,42 @@ function ReviewSkeleton() {
 }
 
 export default function GoogleReviewsSection() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [placeData, setPlaceData] = useState<PlaceData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   
   const googleMapsUrl = "https://www.google.com/maps/place/DCW+FINANCIAL+INC./@45.4978758,-73.6484381,17z/";
 
   useEffect(() => {
-    // Fetch testimonials from Google Sheets
-    fetch("https://script.google.com/macros/s/AKfycbwzoJbeZvpRY3_pVNgjgDuLqBSsJ9GVuu5MdVTvtne2vIpVyX8YBPWFg23aQ0mhKPFqkg/exec")
+    // Fetch from our API route which calls Google Places API
+    fetch("/api/google-reviews")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && data.data.length > 0) {
-          setTestimonials(data.data);
+        if (data.success && data.data) {
+          setPlaceData(data.data);
+          setError(null);
+        } else {
+          setError(data.error || "Failed to load reviews");
+          console.error("Google Reviews API error:", data);
         }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error("Failed to fetch Google reviews:", err);
+        setError("Failed to load reviews");
+        setLoading(false);
+      });
   }, []);
 
-  // Calculate average rating
-  const avgRating = testimonials.length > 0 
-    ? (testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length).toFixed(1)
-    : "5.0";
+  // Don't render if no data and not loading
+  if (!loading && !placeData) {
+    return null; // Hide section if API fails
+  }
 
   // Duplicate reviews for infinite scroll effect
-  const displayReviews = [...testimonials, ...testimonials];
+  const displayReviews = placeData?.reviews ? [...placeData.reviews, ...placeData.reviews] : [];
 
   return (
     <section className="google-reviews-section">
@@ -125,18 +139,20 @@ export default function GoogleReviewsSection() {
               <GoogleLogo size={28} />
               <span>Google Reviews</span>
             </div>
-            <div className="gr-rating-summary">
-              <span className="gr-rating-number">{avgRating}</span>
-              <div className="gr-rating-details">
-                <Stars rating={Math.round(parseFloat(avgRating))} size={20} />
-                <span className="gr-review-count">
-                  Based on {testimonials.length || 5} review{testimonials.length !== 1 ? "s" : ""}
-                </span>
+            {placeData && (
+              <div className="gr-rating-summary">
+                <span className="gr-rating-number">{placeData.rating?.toFixed(1) || "5.0"}</span>
+                <div className="gr-rating-details">
+                  <Stars rating={Math.round(placeData.rating || 5)} size={20} />
+                  <span className="gr-review-count">
+                    Based on {placeData.totalReviews || 0} review{placeData.totalReviews !== 1 ? "s" : ""}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <a 
-            href={googleMapsUrl}
+            href={placeData?.url || googleMapsUrl}
             target="_blank" 
             rel="noopener noreferrer"
             className="gr-write-review-btn"
@@ -156,7 +172,11 @@ export default function GoogleReviewsSection() {
               <ReviewSkeleton />
             </div>
           </div>
-        ) : testimonials.length === 0 ? (
+        ) : error ? (
+          <div className="gr-error">
+            <p>Unable to load Google Reviews. <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">View on Google Maps</a></p>
+          </div>
+        ) : displayReviews.length === 0 ? (
           <div className="gr-empty">
             <p>No reviews yet. Be the first to review!</p>
           </div>
@@ -171,15 +191,18 @@ export default function GoogleReviewsSection() {
               className={`gr-carousel-track ${isPaused ? "paused" : ""}`}
             >
               {displayReviews.map((review, idx) => (
-                <div
+                <a
                   key={idx}
+                  href={review.author_url || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="gr-review-card"
                 >
                   <div className="gr-review-header">
-                    <ReviewerAvatar name={review.name} photoUrl={review.avatarUrl} />
+                    <ReviewerAvatar name={review.author_name} photoUrl={review.profile_photo_url} />
                     <div className="gr-reviewer-info">
-                      <h4 className="gr-reviewer-name">{review.name}</h4>
-                      <span className="gr-review-time">{review.location}</span>
+                      <h4 className="gr-reviewer-name">{review.author_name}</h4>
+                      <span className="gr-review-time">{review.relative_time_description}</span>
                     </div>
                     <div className="gr-google-icon">
                       <GoogleLogo size={20} />
@@ -187,9 +210,9 @@ export default function GoogleReviewsSection() {
                   </div>
                   <Stars rating={review.rating} size={18} />
                   <p className="gr-review-text">
-                    {review.testimonial || "Gave us 5 stars!"}
+                    {review.text || "Gave us 5 stars on Google!"}
                   </p>
-                </div>
+                </a>
               ))}
             </div>
           </div>
@@ -198,7 +221,7 @@ export default function GoogleReviewsSection() {
         {/* Footer CTA */}
         <div className="gr-footer">
           <a 
-            href={googleMapsUrl}
+            href={placeData?.url || googleMapsUrl}
             target="_blank" 
             rel="noopener noreferrer"
             className="gr-see-all-btn"
@@ -354,10 +377,14 @@ export default function GoogleReviewsSection() {
           width: 70%;
         }
 
-        .gr-empty {
+        .gr-empty, .gr-error {
           text-align: center;
           padding: 60px 20px;
           color: var(--muted);
+        }
+        .gr-error a {
+          color: #4285F4;
+          text-decoration: underline;
         }
 
         /* Carousel */

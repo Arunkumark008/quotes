@@ -11,7 +11,7 @@ import CarrierLogoOverride from "@/components/CarrierLogoOverride";
 export default function ManulifePage() {
   return (
     <>
-      <CarrierLogoOverride logoSrc="/company/manulife.png" carrierName="Manulife" />
+      <CarrierLogoOverride logoSrc="/company/manulife.png" carrierName="Manulife" logoSize="xlarge" />
       <Header />
       <main>
         <HeroSection />

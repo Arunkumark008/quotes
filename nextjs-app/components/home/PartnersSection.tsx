@@ -15,7 +15,7 @@ const logos = [
   { file: "uv insurance.png",      name: "UV Insurance" },
 ];
 
-const allLogos = [...logos, ...logos, ...logos];
+const allLogos = [...logos, ...logos, ...logos, ...logos, ...logos];
 
 export default function PartnersSection() {
   return (

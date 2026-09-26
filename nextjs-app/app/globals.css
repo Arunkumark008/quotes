@@ -204,10 +204,16 @@ button { cursor: pointer; }
 .marquee-track {
   display: flex;
   gap: 16px;
-  animation: marqueeLeft 25s linear infinite;
+  animation: marqueeLeft 10s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+/* Faster on mobile */
+@media (max-width: 768px) {
+  .marquee-track {
+    animation: marqueeLeft 6s linear infinite;
+  }
 }
 /* No hover pause — continuous loop */
 
